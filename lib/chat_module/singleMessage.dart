@@ -28,18 +28,23 @@ class SingleMessage extends StatelessWidget {
     DateTime d = DateTime.parse(date!.toDate().toString());
     String cdate = "${d.hour}" + ":" + "${d.minute}";
     return Column(
-      crossAxisAlignment: isMe!? CrossAxisAlignment.end:CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        Visibility(child: Row(
-          children: [
-            SizedBox(width: 8,),
-            Text(friendName!,
-              style: TextStyle(
-                  fontSize: 10
-              ),),
-          ],
+        Visibility(
+          child: Row(
+            children: [
+              SizedBox(
+                width: 8,
+              ),
+              Text(
+                friendName!,
+                style: TextStyle(fontSize: 10),
+              ),
+            ],
+          ),
+          visible: !isMe!,
         ),
-          visible: !isMe!,),
         Container(
           padding: EdgeInsets.symmetric(
             horizontal: 20 * 0.75,
@@ -57,10 +62,11 @@ class SingleMessage extends StatelessWidget {
                   : Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
-        ),Text("$cdate",
-          style: TextStyle(
-              fontSize: 10
-          ),),
+        ),
+        Text(
+          "$cdate",
+          style: TextStyle(fontSize: 10),
+        ),
       ],
     );
   }

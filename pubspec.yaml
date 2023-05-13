@@ -42,9 +42,9 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   url_launcher: ^6.1.5
   fluttertoast: ^8.0.9
-  firebase_core: ^2.5.0
-  firebase_auth: ^4.2.6
-  cloud_firestore: ^4.3.2
+  firebase_core: ^1.3.0
+  firebase_auth: ^3.1.4
+  cloud_firestore: ^3.1.6
   shared_preferences: ^2.0.15
   permission_handler: ^10.0.2
   contacts_service: ^0.6.3
@@ -55,9 +55,11 @@ dependencies:
   geocoding: ^2.0.5
   image_picker: ^0.8.6+1
   uuid: ^3.0.7
-  firebase_storage: ^11.0.11
+  firebase_storage: ^9.0.0
   cached_network_image: ^3.1.0
   shake: ^2.2.0
+  google_maps_flutter: ^2.0.6
+  geoflutterfire: ^3.0.1
   # device_info_plus: ^8.1.0
 
   flutter_background_service: ^2.4.6
@@ -67,7 +69,9 @@ dependencies:
 
 
 
-
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
