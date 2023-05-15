@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // const HomeScreen({super.key});
   int qIndex = 0;
   Position? _curentPosition;
-  String? _curentAddress;
+  //String? _curentAddress;
   LocationPermission? permission;
   _getPermission() async => await [Permission.sms].request();
   _isPermissionGranted() async => await Permission.sms.status.isGranted;
@@ -92,8 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       Placemark place = placemarks[0];
       setState(() {
-        _curentAddress =
-            "${place.locality},${place.postalCode},${place.street},";
+        // _curentAddress =
+        //     "${place.locality},${place.postalCode},${place.street},";
       });
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());

@@ -6,6 +6,8 @@ import 'package:women_safety_app/db/share_pref.dart';
 import 'package:women_safety_app/child/child_login_screen.dart';
 import 'package:women_safety_app/utils/constants.dart';
 import 'package:women_safety_app/utils/flutter_background_services.dart';
+import 'package:women_safety_app/widgets/home_widgets/live_safe/location_component/GroupLocationWidget.dart';
+import 'package:women_safety_app/widgets/home_widgets/live_safe/location_component/Search.dart';
 import 'child/bottom_page.dart';
 
 final navigatorkey = GlobalKey<ScaffoldMessengerState>();
@@ -25,25 +27,32 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       // scaffoldMessengerKey: navigatorkey,
+      initialRoute: '/',
+      routes: {
+        '/': (context) {
+          return FutureBuilder(
+            future: MySharedPrefference.getUserType(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data == "") {
+                return LoginScreen();
+              }
+              if (snapshot.data == "child") {
+                return BottomPage();
+              }
+
+              return progressIndicator(context);
+            },
+          );
+        },
+        '/groups': (context) => GroupLocationWidget(),
+        '/search': (context) => Search(),
+      },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.firaSansTextTheme(
           Theme.of(context).textTheme,
         ),
         primarySwatch: Colors.blue,
-      ),
-      home: FutureBuilder(
-        future: MySharedPrefference.getUserType(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data == "") {
-            return LoginScreen();
-          }
-          if (snapshot.data == "child") {
-            return BottomPage();
-          }
-
-          return progressIndicator(context);
-        },
       ),
     );
   }
