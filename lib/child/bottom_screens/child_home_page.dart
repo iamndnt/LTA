@@ -15,6 +15,9 @@ import 'package:women_safety_app/widgets/home_widgets/emergency.dart';
 import 'package:women_safety_app/widgets/home_widgets/safehome/SafeHome.dart';
 import 'package:women_safety_app/widgets/live_safe.dart';
 
+import '../../sos/start_screen_sos.dart';
+import '../../utils/constants.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // const HomeScreen({super.key});
   int qIndex = 0;
   Position? _curentPosition;
-  //String? _curentAddress;
+  String? _curentAddress;
   LocationPermission? permission;
   _getPermission() async => await [Permission.sms].request();
   _isPermissionGranted() async => await Permission.sms.status.isGranted;
@@ -72,8 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-            forceAndroidLocationManager: true)
+        desiredAccuracy: LocationAccuracy.high,
+        forceAndroidLocationManager: true)
         .then((Position position) {
       setState(() {
         _curentPosition = position;
@@ -81,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
         _getAddressFromLatLon();
       });
     }).catchError((e) {
-      Fluttertoast.showToast(msg: e.toString());
     });
   }
 
@@ -92,11 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
       Placemark place = placemarks[0];
       setState(() {
-        // _curentAddress =
-        //     "${place.locality},${place.postalCode},${place.street},";
+        _curentAddress =
+        "${place.locality},${place.postalCode},${place.street},";
       });
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
     }
   }
 
@@ -114,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
         "https://maps.google.com/?daddr=${_curentPosition!.latitude},${_curentPosition!.longitude}";
     if (await _isPermissionGranted()) {
       contactList.forEach((element) {
-        _sendSms("${element.number}", "i am in trouble $messageBody");
+        _sendSms("${element.number}", "I am in trouble $messageBody");
       });
     } else {
       Fluttertoast.showToast(msg: "something wrong");
@@ -147,7 +148,42 @@ class _HomeScreenState extends State<HomeScreen> {
     // To close: detector.stopListening();
     // ShakeDetector.waitForStart() waits for user to call detector.startListening();
   }
-
+  Widget Sos(){
+    return InkWell(
+      onTap: (){
+        goTo(
+            context,
+            StartScreenSOS());
+      },
+      child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Container(
+          height: 180,
+          width: MediaQuery.of(context).size.width * 0.7,
+          decoration: BoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text("Alert to trusted people"),
+                        subtitle: Text("In case of danger"),
+                      ),
+                    ],
+                  )),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset('assets/alertpreview.png')),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,6 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     LiveSafe(),
                     SafeHome(),
+                    Sos()
                   ],
                 ),
               ),

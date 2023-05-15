@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../utils/constants.dart';
+
 class SingleMessage extends StatelessWidget {
   final String? message;
   final bool? isMe;
@@ -14,13 +16,13 @@ class SingleMessage extends StatelessWidget {
 
   const SingleMessage(
       {super.key,
-      this.message,
-      this.isMe,
-      this.image,
-      this.type,
-      this.friendName,
-      this.myName,
-      this.date});
+        this.message,
+        this.isMe,
+        this.image,
+        this.type,
+        this.friendName,
+        this.myName,
+        this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +30,34 @@ class SingleMessage extends StatelessWidget {
     DateTime d = DateTime.parse(date!.toDate().toString());
     String cdate = "${d.hour}" + ":" + "${d.minute}";
     return Column(
-      crossAxisAlignment:
-          isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment: isMe!? CrossAxisAlignment.end:CrossAxisAlignment.start,
       children: [
-        Visibility(
-          child: Row(
-            children: [
-              SizedBox(
-                width: 8,
-              ),
-              Text(
-                friendName!,
-                style: TextStyle(fontSize: 10),
-              ),
-            ],
-          ),
-          visible: !isMe!,
+        Visibility(child: Row(
+          children: [
+            SizedBox(width: 8,),
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+                if (!snapshot.hasData) {
+                  return Center(child: progressIndicator(context));
+                }
+                for(int i=0;i<snapshot.data!.docs.length;i++){
+                  final d = snapshot.data!.docs[i];
+                  if(friendName?.compareTo(d['id'])==0)
+                    return Text(d['name']!,
+                      style: TextStyle(
+                          fontSize: 10
+                      ),);
+                }
+                return Text('');
+              },
+            ),
+          ],
         ),
+          visible: !isMe!,),
         Container(
           padding: EdgeInsets.symmetric(
             horizontal: 20 * 0.75,
@@ -62,11 +75,10 @@ class SingleMessage extends StatelessWidget {
                   : Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
-        ),
-        Text(
-          "$cdate",
-          style: TextStyle(fontSize: 10),
-        ),
+        ),Text("$cdate",
+          style: TextStyle(
+              fontSize: 10
+          ),),
       ],
     );
   }
