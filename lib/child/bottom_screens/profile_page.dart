@@ -11,6 +11,7 @@ import 'package:uuid/uuid.dart';
 import 'package:women_safety_app/child/child_login_screen.dart';
 import 'package:women_safety_app/components/PrimaryButton.dart';
 import 'package:women_safety_app/components/custom_textfield.dart';
+import 'package:women_safety_app/db/auth_services.dart';
 import 'package:women_safety_app/utils/constants.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -68,6 +69,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             "UPDATE YOUR PROFILE",
                             style: TextStyle(fontSize: 25),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.logout),
+                            title: Text('Log Out'),
+                            onTap: () {
+                              //Navigator.pop(context);
+                              AuthClass authClass = AuthClass();
+                              authClass.signOut();
+                            },
                           ),
                           SizedBox(height: 15),
                           GestureDetector(

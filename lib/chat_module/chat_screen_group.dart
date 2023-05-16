@@ -2,26 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:women_safety_app/chat_module/message_text_field.dart';
+import 'package:women_safety_app/chat_module/message_text_field_gr.dart';
 import 'package:women_safety_app/chat_module/singleMessage.dart';
-
 import '../utils/constants.dart';
-
-class ChatScreen1v1 extends StatefulWidget {
+class ChatScreenGroup extends StatefulWidget {
   final String currentUserId;
-  final String friendId;
-  final String friendName;
+  final String groupId;
+  final List<String>? friendsId;
+  final String groupName;
 
-  const ChatScreen1v1(
+  const ChatScreenGroup(
       {super.key,
-      required this.currentUserId,
-      required this.friendId,
-      required this.friendName});
+        required this.currentUserId,
+        required this.groupId,
+        required this.friendsId,
+        required this.groupName});
 
   @override
-  State<ChatScreen1v1> createState() => _ChatScreen1v1State();
+  State<ChatScreenGroup> createState() => _ChatScreenGroupState();
 }
 
-class _ChatScreen1v1State extends State<ChatScreen1v1> {
+class _ChatScreenGroupState extends State<ChatScreenGroup> {
   String? type;
   String? myname;
 
@@ -40,27 +41,19 @@ class _ChatScreen1v1State extends State<ChatScreen1v1> {
   }
 
   @override
-  void initState() {
-    getStatus();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
-          title: Text(widget.friendName),
+          title: Text(widget.groupName),
         ),
         body: Column(
           children: [
-            Expanded(
+        Expanded(
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(widget.currentUserId)
-                    .collection('messages')
-                    .doc(widget.friendId)
+                    .collection('groups')
+                    .doc(widget.groupId)
                     .collection('chats')
                     .orderBy('date', descending: false)
                     .snapshots(),
@@ -70,11 +63,12 @@ class _ChatScreen1v1State extends State<ChatScreen1v1> {
                     if (snapshot.data!.docs.length < 1) {
                       return Center(
                         child: Text(
-                          'Let start conversation with '+widget.friendName,
+                          'Let start conversation with '+widget.groupName,
                           style: TextStyle(fontSize: 30),
                         ),
                       );
                     }
+
                     return Container(
                       child: ListView.builder(
                         itemCount: snapshot.data!.docs.length,
@@ -86,29 +80,25 @@ class _ChatScreen1v1State extends State<ChatScreen1v1> {
                             key: UniqueKey(),
                             onDismissed: (direction) async {
                               await FirebaseFirestore.instance
-                                  .collection('users')
-                                  .doc(widget.currentUserId)
-                                  .collection('messages')
-                                  .doc(widget.friendId)
+                                  .collection('groups')
+                                  .doc(widget.groupId)
                                   .collection('chats')
                                   .doc(data.id)
                                   .delete();
                               await FirebaseFirestore.instance
-                                  .collection('users')
-                                  .doc(widget.friendId)
-                                  .collection('messages')
-                                  .doc(widget.currentUserId)
+                                  .collection('groups')
+                                  .doc(widget.groupId)
                                   .collection('chats')
                                   .doc(data.id)
                                   .delete()
                                   .then((value) => Fluttertoast.showToast(
-                                      msg: 'message deleted successfully'));
+                                  msg: 'message deleted successfully'));
                             },
                             child: SingleMessage(
                               message: data['message'],
                               date: data['date'],
                               isMe: isMe,
-                              friendName: widget.friendName,
+                              friendName: snapshot.data!.docs[index]['senderId'],
                               myName: myname,
                               type: data['type'],
                             ),
@@ -121,11 +111,13 @@ class _ChatScreen1v1State extends State<ChatScreen1v1> {
                 },
               ),
             ),
-            MessageTextField(
+            MessageTextFieldGroup(
               currentId: widget.currentUserId,
-              friendId: widget.friendId,
+              groupId: widget.groupId,
             ),
           ],
-        ));
+        ),
+    );
+
   }
 }

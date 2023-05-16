@@ -1,21 +1,21 @@
 List sweetSayings = [
-  "Your presence, lights up the whole room",
-  "We admire,Your strong personality.",
-  "We’ll help you In any way we can,",
-  "You are Strong and courageous",
-  'I say if I’m beautiful. I say if I’m strong',
-  'Above all, be the heroine of your life, not the victim',
+  "Safety doesn't happen by accident.",
+  "Prepare and prevent, don’t repair and repent.",
+  "At the end of the day, the goals are simple: safety and security.",
+  "Obedience is the mother of success and is wedded to safety.",
+  'Better a thousand times careful than once dead.',
+  'Carefulness costs you nothing. Carelessness may cost you your life.',
 ];
 
 List<String> articleTitle = [
-  "Pakistani women are inspiring country",
-  "We have to end Violance",
-  "Be a change",
+  "Basic Safety Rules Every Child Should Know",
+  "Safety Tips for the Workplace",
+  "How we're ending violence against children",
   "You are strong"
 ];
 List<String> imageSliders = [
-  "https://media.istockphoto.com/photos/silhouette-of-super-strong-successful-businesswoman-picture-id1249879109?k=20&m=1249879109&s=612x612&w=0&h=I-joEMjqkq1wCJZJeLWUCd1d2HcB5WxBShdkA9YM0cg=",
-  "https://media.istockphoto.com/vectors/young-woman-looks-at-the-mirror-and-sees-her-happy-reflection-vector-id1278815846?k=20&m=1278815846&s=612x612&w=0&h=JUTmV9Of-_ILOfXBfV9Cmp_41yuTliSdFIcZy5LKuss=",
-  "https://media.istockphoto.com/vectors/mental-health-or-psychology-concept-with-flowering-human-head-vector-id1268669581?k=20&m=1268669581&s=612x612&w=0&h=YVLTKCZXKugEn40aqOkir4vcoFeTUAQToa1i3AFYRNU=",
-  "https://media.istockphoto.com/photos/confidence-and-strength-concept-picture-id1086700012?k=20&m=1086700012&s=612x612&w=0&h=1wWVN3AB7BH7o3y2A2b-NG3HB9H6Dwkc9OLz2lxgwAY=",
+  "https://firebasestorage.googleapis.com/v0/b/ltsv2-2f7f9.appspot.com/o/profile%2Fa1.jpg?alt=media&token=dd3358f2-f114-4557-af71-808dd5b01ef2",
+  "https://firebasestorage.googleapis.com/v0/b/ltsv2-2f7f9.appspot.com/o/profile%2Fa2.jpg?alt=media&token=07ba4623-6c9e-4378-99de-94bc8498646c",
+  "https://firebasestorage.googleapis.com/v0/b/ltsv2-2f7f9.appspot.com/o/profile%2Fa3.jpg?alt=media&token=714ed2d4-992c-49d1-bd50-f8d3f2eb7146",
+  "https://firebasestorage.googleapis.com/v0/b/ltsv2-2f7f9.appspot.com/o/profile%2Fa4.jpg?alt=media&token=c203d7ee-8c69-4df4-a5cf-46f65fd453fc",
 ];
