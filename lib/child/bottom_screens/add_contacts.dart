@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:women_safety_app/child/bottom_screens/add_friend.dart';
 import 'package:women_safety_app/child/bottom_screens/contacts_page.dart';
 import 'package:women_safety_app/components/PrimaryButton.dart';
 import 'package:women_safety_app/db/db_services.dart';
@@ -60,6 +61,18 @@ class _AddContactsPageState extends State<AddContactsPage> {
           padding: EdgeInsets.all(12),
           child: Column(
             children: [
+              PrimaryButton(
+                  title: "Add Friends",
+                  onPressed: () async {
+                    bool result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddFriend(),
+                        ));
+                    if (result == true) {
+                      showList();
+                    }
+                  }),
               PrimaryButton(
                   title: "Add Trusted Contacts",
                   onPressed: () async {
