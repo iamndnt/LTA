@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:women_safety_app/model/user_model.dart';
 import 'package:custom_marker/marker_icon.dart';
 
+// ignore: must_be_immutable
 class MapScreen extends StatefulWidget {
   final String grpDocId;
   List<UserModel> listUsers;

@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,10 +9,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:women_safety_app/child/child_login_screen.dart';
+
 import 'package:women_safety_app/components/PrimaryButton.dart';
 import 'package:women_safety_app/components/custom_textfield.dart';
-import 'package:women_safety_app/db/auth_services.dart';
-import 'package:women_safety_app/utils/constants.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -73,10 +72,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           ListTile(
                             leading: Icon(Icons.logout),
                             title: Text('Log Out'),
-                            onTap: () {
-                              //Navigator.pop(context);
-                              AuthClass authClass = AuthClass();
-                              authClass.signOut();
+                            onTap: () async {
+                              SharedPreferences preferences =
+                                  await SharedPreferences.getInstance();
+                              await preferences.clear();
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
                             },
                           ),
                           SizedBox(height: 15),
@@ -162,6 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
     }
+    return null;
   }
 
   update() async {
