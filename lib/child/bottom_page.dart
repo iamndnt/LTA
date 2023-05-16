@@ -57,9 +57,9 @@ class _BottomPageState extends State<BottomPage> {
                 Icons.person,
               )),
           BottomNavigationBarItem(
-              label: 'Reviews',
+              label: 'Alert',
               icon: Icon(
-                Icons.reviews,
+                Icons.add_alert_rounded,
               ))
         ],
       ),
