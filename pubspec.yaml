@@ -60,6 +60,7 @@ dependencies:
   shake: ^2.2.0
   google_maps_flutter: ^2.0.6
   geoflutterfire: ^3.0.1
+  rxdart: ^0.27.1
   # device_info_plus: ^8.1.0
 
   flutter_background_service: ^2.4.6
