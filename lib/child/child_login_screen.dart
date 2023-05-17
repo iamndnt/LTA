@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:women_safety_app/child/bottom_page.dart';
 import 'package:women_safety_app/components/PrimaryButton.dart';
 import 'package:women_safety_app/components/SecondaryButton.dart';
@@ -8,7 +9,6 @@ import 'package:women_safety_app/components/custom_textfield.dart';
 import 'package:women_safety_app/child/register_child.dart';
 import 'package:women_safety_app/db/share_pref.dart';
 import 'package:women_safety_app/utils/constants.dart';
-
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -80,16 +80,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "USER LOGIN",
-                                style: TextStyle(
-                                    fontSize: 40,
+                                "LOGIN",
+                                style: GoogleFonts.notoSerif(
+                                    fontSize: 46,
                                     fontWeight: FontWeight.bold,
-                                    color: primaryColor),
+                                    color: Colors.blue.shade600),
                               ),
                               Image.asset(
-                                'assets/logo.png',
-                                height: 100,
-                                width: 100,
+                                'assets/logo_login.png',
+                                height: 150,
+                                width: 130,
                               ),
                             ],
                           ),
