@@ -68,24 +68,29 @@ class _AddContactsPageState extends State<AddContactsPage> {
               PrimaryButton(
                   title: "Add Friends",
                   onPressed: () async {
-                    
                     UserService userService = UserService();
                     var listUsers = (await userService.allUsersOnce);
 
                     debugPrint('Length of List User: ${listUsers?.length}');
-                    listUsers?.forEach((element) {
-                      debugPrint('User: ${element.phone}');
-                    },);
+                    listUsers?.forEach(
+                      (element) {
+                        debugPrint('User: ${element.phone}');
+                      },
+                    );
 
                     bool result = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddFriend(listUserFromFireStore: listUsers ?? []),
+                          builder: (context) =>
+                              AddFriend(listUserFromFireStore: listUsers ?? []),
                         ));
                     if (result == true) {
                       showList();
                     }
                   }),
+              SizedBox(
+                height: 20,
+              ),
               PrimaryButton(
                   title: "Add Trusted Contacts",
                   onPressed: () async {

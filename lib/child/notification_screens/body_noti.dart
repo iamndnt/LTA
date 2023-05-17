@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:women_safety_app/model/user_model.dart';
 
@@ -13,14 +14,18 @@ class BodyNoti extends StatefulWidget {
   State<BodyNoti> createState() => _BodyNotiState();
 }
 
+FirebaseAuth _auth = FirebaseAuth.instance;
+String currentId = _auth.currentUser!.uid;
+
 class _BodyNotiState extends State<BodyNoti> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: DatabaseService().getListIdSender(),
+        stream: DatabaseService().getListIdSender(currentId),
         builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
           List<String>? listIdSender = snapshot.data;
           return Text("List Id Sender ${listIdSender?.length}");
+
           //   ListView.builder(
           //   itemCount: listSOS.length,
           //   itemBuilder: (BuildContext context, int index) {
