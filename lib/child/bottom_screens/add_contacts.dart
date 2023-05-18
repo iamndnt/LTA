@@ -6,7 +6,9 @@ import 'package:women_safety_app/child/bottom_screens/add_friend.dart';
 import 'package:women_safety_app/child/bottom_screens/contacts_page.dart';
 import 'package:women_safety_app/components/PrimaryButton.dart';
 import 'package:women_safety_app/db/db_services.dart';
+import 'package:women_safety_app/db/user_model_services.dart';
 import 'package:women_safety_app/model/contactsm.dart';
+import 'package:women_safety_app/model/user_model.dart';
 
 class AddContactsPage extends StatefulWidget {
   const AddContactsPage({super.key});
@@ -19,6 +21,8 @@ class _AddContactsPageState extends State<AddContactsPage> {
   DatabaseHelper databasehelper = DatabaseHelper();
   List<TContact>? contactList;
   int count = 0;
+
+  late Future<List<UserModel>?> _listUserFromFireStore;
 
   void showList() {
     Future<Database> dbFuture = databasehelper.initializeDatabase();
@@ -64,15 +68,29 @@ class _AddContactsPageState extends State<AddContactsPage> {
               PrimaryButton(
                   title: "Add Friends",
                   onPressed: () async {
+                    UserService userService = UserService();
+                    var listUsers = (await userService.allUsersOnce);
+
+                    debugPrint('Length of List User: ${listUsers?.length}');
+                    listUsers?.forEach(
+                      (element) {
+                        debugPrint('User: ${element.phone}');
+                      },
+                    );
+
                     bool result = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddFriend(),
+                          builder: (context) =>
+                              AddFriend(listUserFromFireStore: listUsers ?? []),
                         ));
                     if (result == true) {
                       showList();
                     }
                   }),
+              SizedBox(
+                height: 20,
+              ),
               PrimaryButton(
                   title: "Add Trusted Contacts",
                   onPressed: () async {

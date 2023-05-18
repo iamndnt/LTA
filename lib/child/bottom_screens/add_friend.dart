@@ -1,12 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:women_safety_app/child/notification_screens/notifications_page.dart';
+import 'package:women_safety_app/model/user_model.dart';
+import 'package:women_safety_app/service/notification_service.dart';
 
+import '../../db/user_model_services.dart';
+
+// ignore: must_be_immutable
 class AddFriend extends StatefulWidget {
+  List<UserModel> listUserFromFireStore;
+  AddFriend({super.key, required this.listUserFromFireStore});
+
   @override
   _AddFriendState createState() => _AddFriendState();
 }
 
 class _AddFriendState extends State<AddFriend> {
+  late TextEditingController phoneController;
+
+  bool isPhoneContain(String phone) {
+    for (int i = 0; i < (widget.listUserFromFireStore.length); i++) {
+      if (phone == widget.listUserFromFireStore[i].phone) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // To find id & name has phone you need
+  List<String> idandNameHasPhoneNumber(String phone) {
+    List<String> listContainIdAndName = [];
+    for (int i = 0; i < (widget.listUserFromFireStore.length); i++) {
+      if (phone == widget.listUserFromFireStore[i].phone) {
+        listContainIdAndName.add(widget.listUserFromFireStore[i].id ?? '');
+        listContainIdAndName.add(widget.listUserFromFireStore[i].name ?? '');
+        break;
+      }
+    }
+    return listContainIdAndName;
+  }
+
+  @override
+  void initState() {
+    phoneController = TextEditingController()
+      ..addListener(() {
+        setState(() {});
+      });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -17,11 +59,32 @@ class _AddFriendState extends State<AddFriend> {
           children: [
             const Spacer(),
             IconButton(
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  UserService userService = UserService();
+                    var listUsers = (await userService.allUsersOnce);
+
+                    debugPrint('Length of List User: ${listUsers?.length}');
+                    listUsers?.forEach((element) {
+                      debugPrint('User: ${element.phone}');
+                    },);
+
+                  NotificationService notiService = NotificationService();
+                  var listNoti = (await notiService.allNotisOnce);
+                  debugPrint('Length of List Noti: ${listNoti?.length}');
+                  listNoti?.forEach(
+                    (element) {
+                      debugPrint('User: ${element.ReceiverId}');
+                    },
+                  );
+                  bool result = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NotificationScreen()));
+                        builder: (context) => NotificationScreen(listUserFromFireStore: listUsers??[],
+                            listNotiFromFireStore: listNoti ?? []),
+                      ));
+                  if (result == false) {
+                    debugPrint('Error to get Notification');
+                  }
                 },
                 icon: Icon(Icons.notifications))
           ],
@@ -61,6 +124,10 @@ class _AddFriendState extends State<AddFriend> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: TextField(
+                controller: phoneController,
+                onChanged: (value) {
+                  debugPrint('phoneController.text ${phoneController.text}');
+                },
                 textAlign: TextAlign.start,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
@@ -86,27 +153,39 @@ class _AddFriendState extends State<AddFriend> {
             height: height * 0.03,
           ),
           Center(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 26, vertical: 10),
-              decoration: BoxDecoration(
-                  gradient: new LinearGradient(
-                      colors: [Colors.purple.shade600, Colors.purple.shade200]),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 4,
-                        color: Colors.blue.shade200,
-                        offset: Offset(2, 2))
-                  ]),
-              child: Text(
-                "Add".toUpperCase(),
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.7),
-                textAlign: TextAlign.center,
+            child: InkWell(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 26, vertical: 10),
+                decoration: BoxDecoration(
+                    gradient: new LinearGradient(colors: [
+                      Colors.purple.shade600,
+                      Colors.purple.shade200
+                    ]),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 4,
+                          color: Colors.blue.shade200,
+                          offset: Offset(2, 2))
+                    ]),
+                child: Text(
+                  "Add".toUpperCase(),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.7),
+                  textAlign: TextAlign.center,
+                ),
               ),
+              onTap: () {
+                bool isContainerPhone = isPhoneContain(phoneController.text);
+                if (isContainerPhone == true) {
+                  Fluttertoast.showToast(msg: "Send friend request succesfull");
+                } else {
+                  Fluttertoast.showToast(msg: "Phone is not register");
+                }
+              },
             ),
           ),
           SizedBox(

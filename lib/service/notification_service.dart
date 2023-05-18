@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:women_safety_app/model/user_model.dart';
 
-mixin NotificationService {
+import '../model/notification.dart';
+
+class NotificationService {
   FirebaseFirestore _db = FirebaseFirestore.instance;
-  Stream<List<String>> getListIdSender() {
+
+  Stream<List<String>> getListIdSender(String notiId) {
     return _db
         .collection('friendrequests')
-        .doc('T8GTEdpL8VaNQzdWu5ZF')
+        .doc(notiId)
         .snapshots()
         .map((documentSnapshot) {
       final data = documentSnapshot.data();
@@ -19,7 +22,19 @@ mixin NotificationService {
       return list_sender;
     });
   }
-  // Stream<List<UserModel>> getListSender(){
-  //   return
-  //
+
+  List<MyNotification>? _usersFromQuerySnapshot(
+      QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+    return querySnapshot.docs
+        .map((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
+      if (documentSnapshot.exists) {
+        return MyNotification.fromDocumentSnapshot(documentSnapshot);
+      }
+      return MyNotification.test();
+    }).toList();
+  }
+
+  Future<List<MyNotification>?> get allNotisOnce {
+    return _db.collection('friendrequests').get().then(_usersFromQuerySnapshot);
+  }
 }

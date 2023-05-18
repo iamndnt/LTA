@@ -12,9 +12,6 @@ class UserModel {
 
   Future<Map<String,String>> getIdAndImageUser() async {
     Map<String,String> mapResult = new Map();
-
-    
-
     return mapResult;
   }
 
@@ -59,4 +56,33 @@ class UserModel {
         'profilePic': imageUrl,
         'list_friend': listFriends,
       };
+  factory UserModel.fromJson(Map<String, dynamic>? data) {
+    final String? idUser = data?['id'];
+    final String? name = data?['name'];
+    final String? phoneNumber = data?['phone'];
+    final String? linkImage = data?['profilePic'];
+    final String? email = data?['email'];
+    final List<String>? listFriends=[];
+    List.from(data?['list_friend']).forEach((element) {
+        listFriends?.add(element);
+      });
+
+    return UserModel(id: idUser,name: name, phone: phoneNumber,imageUrl: linkImage,email: email,listFriends: listFriends);
+  }
+
+  factory UserModel.test() {
+    String? id_user = "id_user_test";
+    String? name = "name_test";
+    String? phoneNumber = "phone_number_test";
+    String? linkImage = "link_image_test";
+    String? email = "email_test";
+    List<String>? listFriends = ["List Test"];
+    return UserModel(email: email,id: id_user,name: name,phone: phoneNumber,imageUrl: linkImage,listFriends: listFriends);
+  }
+
+  factory UserModel.fromDocumentSnapshot(
+    DocumentSnapshot<Map<String,dynamic>> documentSnapshot){
+      return UserModel.fromJson(documentSnapshot.data());
+    }
+  
 }
