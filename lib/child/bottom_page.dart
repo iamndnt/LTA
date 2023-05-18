@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:women_safety_app/child/AlerScreen.dart';
 import 'package:women_safety_app/child/bottom_screens/add_contacts.dart';
 import 'package:women_safety_app/child/bottom_screens/chat_page.dart';
 import 'package:women_safety_app/child/bottom_screens/child_home_page.dart';
@@ -18,8 +19,8 @@ class _BottomPageState extends State<BottomPage> {
     HomeScreen(),
     AddContactsPage(),
     ChatPage(),
+    AlertScreen(),
     ProfilePage(),
-    ReviewPage(),
   ];
   onTapped(int index) {
     setState(() {
@@ -52,15 +53,16 @@ class _BottomPageState extends State<BottomPage> {
                 Icons.chat,
               )),
           BottomNavigationBarItem(
+              label: 'Alert',
+              icon: Icon(
+                Icons.add_alert_rounded,
+              )),
+          BottomNavigationBarItem(
               label: 'Profile',
               icon: Icon(
                 Icons.person,
               )),
-          BottomNavigationBarItem(
-              label: 'Alert',
-              icon: Icon(
-                Icons.add_alert_rounded,
-              ))
+
         ],
       ),
     );

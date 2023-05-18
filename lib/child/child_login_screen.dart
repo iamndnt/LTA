@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: primaryColor),
                               ),
                               Image.asset(
-                                'assets/logo.png',
+                                'assets/location-marker.png',
                                 height: 100,
                                 width: 100,
                               ),
