@@ -18,20 +18,20 @@ class _SearchState extends State<Search> {
 
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
-  List<QueryDocumentSnapshot> _searchedUsernamesDoc = <QueryDocumentSnapshot>[];
+  List<QueryDocumentSnapshot> _searchedPhoneDoc = <QueryDocumentSnapshot>[];
   List<QueryDocumentSnapshot> _selectedUsernamesDoc = <QueryDocumentSnapshot>[];
 
   void _searchUsernameInDatabase(String text) async {
     List<QueryDocumentSnapshot> result = <QueryDocumentSnapshot>[];
     QuerySnapshot snapshot = await userCollection
-        .where('name',
+        .where('phone',
             isGreaterThanOrEqualTo: text, isLessThanOrEqualTo: text + '\uf8ff')
         .get();
     snapshot.docs.forEach((doc) {
       result.add(doc);
     });
     setState(() {
-      _searchedUsernamesDoc = result;
+      _searchedPhoneDoc = result;
     });
   }
 
@@ -104,7 +104,7 @@ class _SearchState extends State<Search> {
               autofocus: true,
               decoration: InputDecoration(
                 // add more decoration
-                hintText: 'Search by username',
+                hintText: 'Search by phone',
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(color: Colors.black, fontSize: 16.0),
@@ -120,18 +120,18 @@ class _SearchState extends State<Search> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: _searchedUsernamesDoc.length,
+                  itemCount: _searchedPhoneDoc.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       leading: Icon(Icons.label),
-                      title: Text(_searchedUsernamesDoc[index]['name']),
+                      title: Text(_searchedPhoneDoc[index]['name']),
                       // selected: _selectedDestination == 2,
                       onTap: () {
                         if (!_selectedUsernamesDoc
-                            .contains(_searchedUsernamesDoc[index])) {
+                            .contains(_searchedPhoneDoc[index])) {
                           setState(() {
                             _selectedUsernamesDoc
-                                .add(_searchedUsernamesDoc[index]);
+                                .add(_searchedPhoneDoc[index]);
                           });
                         }
                       },
@@ -145,7 +145,7 @@ class _SearchState extends State<Search> {
   }
 
   Widget _buildChip(QueryDocumentSnapshot doc, Color color) {
-    String label = doc['name'];
+    String label = doc['phone'];
     return Chip(
       labelPadding: EdgeInsets.all(2.0),
       avatar: CircleAvatar(
