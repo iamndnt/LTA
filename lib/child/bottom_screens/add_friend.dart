@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:women_safety_app/child/notification_screens/notifications_page.dart';
+import 'package:women_safety_app/db/auth_services.dart';
+import 'package:women_safety_app/model/notification.dart';
 import 'package:women_safety_app/model/user_model.dart';
 import 'package:women_safety_app/service/notification_service.dart';
 
@@ -40,6 +43,8 @@ class _AddFriendState extends State<AddFriend> {
     return listContainIdAndName;
   }
 
+
+
   @override
   void initState() {
     phoneController = TextEditingController()
@@ -76,15 +81,13 @@ class _AddFriendState extends State<AddFriend> {
                       debugPrint('User: ${element.ReceiverId}');
                     },
                   );
-                  bool result = await Navigator.push(
+
+                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => NotificationScreen(listUserFromFireStore: listUsers??[],
                             listNotiFromFireStore: listNoti ?? []),
                       ));
-                  if (result == false) {
-                    debugPrint('Error to get Notification');
-                  }
                 },
                 icon: Icon(Icons.notifications))
           ],
@@ -178,13 +181,34 @@ class _AddFriendState extends State<AddFriend> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              onTap: () {
+              onTap: () async {
                 bool isContainerPhone = isPhoneContain(phoneController.text);
-                if (isContainerPhone == true) {
-                  Fluttertoast.showToast(msg: "Send friend request succesfull");
-                } else {
+                if (isContainerPhone != true) {
                   Fluttertoast.showToast(msg: "Phone is not register");
+                  return;
                 }
+                List<String> idUserHasPhoneNumber = idandNameHasPhoneNumber(phoneController.text);
+                String idUserReceiver='';
+                idUserReceiver = idUserHasPhoneNumber[0];
+                
+                NotificationService noti = NotificationService();
+                // List<MyNotification>? myNotifications = await noti.allNotisOnce;
+                // debugPrint('myNotifications.length ${myNotifications?.length}');
+               String? idNoti = await noti.getIdNotiByIdSender(idUserReceiver);
+               FirebaseAuth _auth = FirebaseAuth.instance;
+              String currentId = _auth.currentUser!.uid;
+               if (idNoti == '') {
+                MyNotification myNoti = MyNotification();
+                
+                myNoti.ReceiverId = idUserReceiver;
+                myNoti.SenderId?.add(currentId);
+
+                noti.creatNotificationToFireStore(myNoti,currentId);
+               } else {
+                noti.addSender(idNoti ??'', currentId);
+               }
+               debugPrint('idNoti: ${idNoti}');
+                Fluttertoast.showToast(msg: "Send friend request succesfull");
               },
             ),
           ),

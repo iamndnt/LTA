@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 import 'package:women_safety_app/model/user_model.dart';
 
@@ -18,6 +19,16 @@ class UserService {
       }
       return UserModel.test();
     }).toList();
+  }
+
+  void addFriendsIntoListFriends(String currentUser, String idSender) {
+    _db.collection('users').doc(currentUser).update({
+      "list_friend": FieldValue.arrayUnion([idSender]),
+    }).onError((error, stackTrace) {
+      debugPrint('${error.toString()}');
+    }).then((value) {
+      Fluttertoast.showToast(msg: 'Add friends into list friends successful');
+    });
   }
 
   Future<List<UserModel>?> get allUsersOnce {

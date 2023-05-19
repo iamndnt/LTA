@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:women_safety_app/child/notification_screens/body_noti.dart';
+import 'package:women_safety_app/db/user_model_services.dart';
 import 'package:women_safety_app/model/notification.dart';
+import 'package:women_safety_app/service/notification_service.dart';
 
 import '../../model/user_model.dart';
 import '../../service/database_service.dart';
@@ -30,18 +32,50 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   late List<UserModel> listUser = widget.listUserFromFireStore;
   late List<UserModel> listUserHaveIdSender = [];
+  String? idNotiCurrent = '';
 
-  String getNotiIdHaveCurrentUser() {
-    debugPrint('ID current: ${currentId}');
+  String? getNotiIdHaveCurrentUser() {
+    debugPrint('huy2.phan Current Id: ${currentId}');
     List<MyNotification> listNoti = widget.listNotiFromFireStore;
     for (int i = 0; i < listNoti.length; i++) {
       if (listNoti[i].ReceiverId == currentId) {
+        debugPrint('ID current: ${listNoti[0].NotificationId}');
+        idNotiCurrent = listNoti[i].NotificationId ?? '';
         return listNoti[i].NotificationId ?? '';
       }
     }
     debugPrint('ID current: ${listNoti[0].NotificationId}');
-    return '';
+    return null;
   }
+
+  List<UserModel> listOfSenderFriendsRequest(List<String>? listIdSender) {
+    List<UserModel> rs = [];
+    for (int i = 0; i < (listIdSender?.length ?? 0); i++) {
+      for (int j = 0; j < (widget.listUserFromFireStore.length); j++) {
+        if (widget.listUserFromFireStore[j].id == listIdSender?[j]) {
+          rs.add(widget.listUserFromFireStore[j]);
+        }
+      }
+    }
+    return rs;
+  }
+
+  void display() {
+    for (int i = 0; i < widget.listNotiFromFireStore.length; i++) {
+      debugPrint('listNoti: ${widget.listNotiFromFireStore[i].ReceiverId}');
+    }
+  }
+
+  bool isFriendRqFireStoreHaveIdReceiver() {
+    for (int i = 0; i < widget.listNotiFromFireStore.length; i++) {
+      if (currentId == widget.listNotiFromFireStore[i].ReceiverId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  
 
   @override
   void initState() {
@@ -51,37 +85,119 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    display();
     return Scaffold(
         appBar: AppBar(),
-        body: StreamBuilder(
-            stream:
-                DatabaseService().getListIdSender(getNotiIdHaveCurrentUser()),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
-              List<String>? listIdSender = snapshot.data;
-              for (int i = 0; i < listIdSender!.length; i++) {
-                for (int j = 0; j < listUser.length; j++) {
-                  if (listIdSender[i] == listUser[j].id) {
-                    listUserHaveIdSender.add(listUser[j]);
+        body: (isFriendRqFireStoreHaveIdReceiver() == false)
+            ? Center(
+                child: Text('You don\'t have friend request 1'),
+              )
+            : StreamBuilder(
+                stream: DatabaseService()
+                    .getListIdSender(getNotiIdHaveCurrentUser() ?? ''),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<String>?> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong: ${snapshot.error}');
                   }
-                }
-              }
-              return ListView.builder(
-                itemCount: listUser.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0.0),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(listUser[index].imageUrl ?? '')),
-                      title: Text(
-                          listUser[index].name! + " sent a friend request "),
-                      trailing: Icon(Icons.person_add_alt_1_sharp),
-                    ),
+                  if (snapshot.connectionState == ConnectionState.waiting ||
+                      snapshot.data == null) {
+                    return Column(
+                      children: const [
+                        CircularProgressIndicator(),
+                      ],
+                    );
+                  }
+                  List<String>? listIdSender = snapshot.data;
+                  if (listIdSender?.length == 0) {
+                    return Center(
+                      child: Text('You don\'t have friend request 2'),
+                    );
+                  }
+                  listUserHaveIdSender.clear();
+                  debugPrint('lengthlistidsender: ${listIdSender?.length}');
+                  for (int i = 0; i < listIdSender!.length; i++) {
+                    for (int j = 0; j < listUser.length; j++) {
+                      if (listIdSender[i] == listUser[j].id) {
+                        debugPrint('idSender: ${listIdSender[i]}');
+                        debugPrint('Name: ${listUser[j].name}');
+                        debugPrint('User: ${listUser[j].id}');
+                        listUserHaveIdSender.add(listUser[j]);
+                      }
+                    }
+                  }
+                  listUserHaveIdSender.forEach((element) {
+                    debugPrint('ushaveid ${element.id}');
+                  });
+
+                  return ListView.builder(
+                    itemCount: listUserHaveIdSender.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 0.0),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(listUserHaveIdSender[index].imageUrl ?? '')),
+                          title: Text((listUserHaveIdSender[index].name!.length > 10)
+                              ? ('${listUserHaveIdSender[index].name!.substring(1, 10)}... ')
+                              : ('${listUserHaveIdSender[index].name!}') +
+                                  " sent a friend request "),
+                          //trailing: Icon(Icons.person_add_alt_1_sharp),
+                          trailing: Column(
+                            children: [
+                              Spacer(),
+                              myAcceptFriendRequestButton(
+                                  'ACCEPT',
+                                  currentId,
+                                  listUserHaveIdSender[index].id ?? '',
+                                  idNotiCurrent ?? ''),
+                              Spacer(),
+                              myAcceptFriendRequestButton(
+                                  'REMOVE',
+                                  currentId,
+                                  listUserHaveIdSender[index].id ?? '',
+                                  idNotiCurrent ?? ''),
+                              Spacer(),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   );
-                },
-              );
-            }));
+                }));
+  }
+
+  Widget myAcceptFriendRequestButton(
+      String ACCEPT, String currentUser, String idSender, String idNoti) {
+    bool isAccept = ACCEPT == 'ACCEPT';
+
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: Color.fromARGB(1, 209, 103, 186),
+        ),
+        child: Text(
+          '${ACCEPT}',
+          style: TextStyle(
+            color: (isAccept == true) ? (Colors.blueAccent) : (Colors.red[400]),
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+      onTap: () {
+        if (isAccept == true) {
+          UserService userService = UserService();
+          userService.addFriendsIntoListFriends(currentUser, idSender);
+          userService.addFriendsIntoListFriends(idSender, currentUser);
+
+        }
+        NotificationService notificationService = NotificationService();
+        notificationService.deleteSender(idNoti, idSender);
+
+        setState(() {});
+      },
+    );
   }
 }

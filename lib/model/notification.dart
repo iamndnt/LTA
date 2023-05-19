@@ -13,11 +13,16 @@ class MyNotification {
       };
   factory MyNotification.fromJson(Map<String, dynamic>? data) {
     final String? ReceiverId = data?['ReceiverId'];
-    final List<String>? SenderId = [];
-    final String? NotificationId = data?['NotificationId'];
-    List.from(data?['SenderId']).forEach((element) {
-      SenderId?.add(element);
-    });
+     List<String>? SenderId = data?['SenderId'] is Iterable
+        ? (List.from(data?['SenderId']))
+        : null;
+    // final List<String>? SenderId = [];
+     final String? NotificationId = data?['NotificationId'];
+    // List.from(data?['SenderId']).forEach((element) {
+    //   SenderId?.add(element);
+    // });
+
+    // SenderId is Iterable ? SenderId : null;
     return MyNotification(
         ReceiverId: ReceiverId,
         SenderId: SenderId,
