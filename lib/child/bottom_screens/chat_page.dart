@@ -44,7 +44,7 @@ class ChatPage extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 20 * 0.75),
+                      horizontal: 5, vertical: 5),
                   child: Row(
                     children: [
                       Stack(
@@ -128,7 +128,7 @@ class ChatPage extends StatelessWidget {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20 * 0.75),
+                            horizontal: 5, vertical: 5),
                         child: Row(
                           children: [
                             Stack(

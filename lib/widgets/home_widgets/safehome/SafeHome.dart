@@ -7,6 +7,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:women_safety_app/db/db_services.dart';
 import 'package:women_safety_app/model/contactsm.dart';
 
+import '../live_safe/location_component/GroupLocationWidget.dart';
+
 class SafeHome extends StatefulWidget {
   @override
   State<SafeHome> createState() => _SafeHomeState();
@@ -162,7 +164,12 @@ class _SafeHomeState extends State<SafeHome> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showModelSafeHome(context),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const GroupLocationWidget()),
+        );
+      },
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(

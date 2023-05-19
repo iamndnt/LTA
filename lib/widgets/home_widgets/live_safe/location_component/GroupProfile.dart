@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:women_safety_app/model/groups.dart';
 import 'package:women_safety_app/model/user_model.dart';
 
-
 class GroupProfile extends StatefulWidget {
   final Group grp;
   const GroupProfile({required this.grp, Key? key}) : super(key: key);
@@ -32,18 +31,24 @@ class _GroupProfileState extends State<GroupProfile> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
-                        leading: Image.network(userList[index].imageUrl!),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(userList[index].imageUrl!),
+                          radius: 20,
+                        ),
                         title: Text(userList[index].name!),
                         trailing: IconButton(
                           icon: Icon(Icons.delete),
-                          onPressed: (){
+                          onPressed: () {
                             try {
-                              widget.grp.deleteUserFromGrp(userList[index].id ?? 'Error');
+                              widget.grp.deleteUserFromGrp(
+                                  userList[index].id ?? 'Error');
                             } catch (error) {
                               debugPrint('${error.toString()}');
                             }
                             Navigator.of(context).pop();
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GroupProfile(grp: widget.grp)));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    GroupProfile(grp: widget.grp)));
                           },
                         ),
                       ),
