@@ -63,6 +63,11 @@ dependencies:
   rxdart: ^0.27.1
   google_sign_in: ^5.0.4
   custom_marker: ^1.0.0
+  mobile_scanner: ^2.1.0
+  qr_code_scanner: ^1.0.1
+  qr_code_vision: ^0.1.0
+  qr_flutter: ^4.0.0
+  flutter_image_compress: ^0.7.0
   # device_info_plus: ^8.1.0
 
   flutter_background_service: ^2.4.6

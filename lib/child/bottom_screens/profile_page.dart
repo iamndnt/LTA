@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String? id;
   String? profilePic;
   String? downloadUrl;
-  String? phone;
+  String? phone="...";
   String? email;
   bool isSaving = false;
   getDate() async {
@@ -133,10 +134,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ]),
                               ),
                               Spacer(),
-                              Image.asset(
-                                'assets/QR.png',
-                                height: 80,
+                              Container(
                                 width: 80,
+                                height: 80,
+                                // color: Colors.amber,
+                                child: Column(
+                                  children: [
+                                    QrImage(data: phone!),
+                                  ],
+                                ),
                               ),
                             ],
                           )),

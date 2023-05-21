@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:women_safety_app/child/notification_screens/notifications_page.dart';
 import 'package:women_safety_app/db/auth_services.dart';
 import 'package:women_safety_app/model/notification.dart';
@@ -20,7 +21,7 @@ class AddFriend extends StatefulWidget {
 
 class _AddFriendState extends State<AddFriend> {
   late TextEditingController phoneController;
-
+  late bool appear;
   bool isPhoneContain(String phone) {
     for (int i = 0; i < (widget.listUserFromFireStore.length); i++) {
       if (phone == widget.listUserFromFireStore[i].phone) {
@@ -44,7 +45,6 @@ class _AddFriendState extends State<AddFriend> {
   }
 
 
-
   @override
   void initState() {
     phoneController = TextEditingController()
@@ -55,9 +55,48 @@ class _AddFriendState extends State<AddFriend> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
+
+  @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    appear = false;
+    MobileScannerController controller = MobileScannerController();
+    bool isScanCompleted = false;
+
+    Widget QrScan(){
+      return Container(
+        width: width*0.25,
+        height: height*0.4,
+        padding: EdgeInsets.all(16),
+        child: Stack(
+          children: [
+            MobileScanner(
+                controller: controller,
+                onDetect: (
+                    barcode,
+                    args,
+                    ) {
+                  if (!isScanCompleted) {
+                    // String code = barcode.image as String;
+                    String code = barcode.rawValue ?? '---';
+
+                    isScanCompleted = true;
+
+                    phoneController.text=code;
+                    Fluttertoast.showToast(msg: "Scan successfully!");
+                  }
+                }),
+            // QRScannerOverlay(overlayColour)
+          ],
+        )
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -156,64 +195,105 @@ class _AddFriendState extends State<AddFriend> {
             height: height * 0.03,
           ),
           Center(
-            child: InkWell(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 26, vertical: 10),
-                decoration: BoxDecoration(
-                    gradient: new LinearGradient(colors: [
-                      Colors.purple.shade600,
-                      Colors.purple.shade200
-                    ]),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 4,
-                          color: Colors.blue.shade200,
-                          offset: Offset(2, 2))
-                    ]),
-                child: Text(
-                  "Add".toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.7),
-                  textAlign: TextAlign.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 26, vertical: 10),
+                    decoration: BoxDecoration(
+                        gradient: new LinearGradient(colors: [
+                          Colors.purple.shade600,
+                          Colors.purple.shade200
+                        ]),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 4,
+                              color: Colors.blue.shade200,
+                              offset: Offset(2, 2))
+                        ]),
+                    child: Text(
+                      "Scan QR".toUpperCase(),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.7),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  onTap: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: height,
+                          width: width,
+                          child: QrScan(),
+                        );
+                      },
+                    );
+                  },
                 ),
-              ),
-              onTap: () async {
-                bool isContainerPhone = isPhoneContain(phoneController.text);
-                if (isContainerPhone != true) {
-                  Fluttertoast.showToast(msg: "Phone is not register");
-                  return;
-                }
-                List<String> idUserHasPhoneNumber = idandNameHasPhoneNumber(phoneController.text);
-                String idUserReceiver='';
-                idUserReceiver = idUserHasPhoneNumber[0];
-                
-                NotificationService noti = NotificationService();
-                // List<MyNotification>? myNotifications = await noti.allNotisOnce;
-                // debugPrint('myNotifications.length ${myNotifications?.length}');
-               String? idNoti = await noti.getIdNotiByIdSender(idUserReceiver);
-               FirebaseAuth _auth = FirebaseAuth.instance;
-              String currentId = _auth.currentUser!.uid;
-               if (idNoti == '') {
-                MyNotification myNoti = MyNotification();
-                
-                myNoti.ReceiverId = idUserReceiver;
-                myNoti.SenderId?.add(currentId);
+                SizedBox(width: 20,),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 26, vertical: 10),
+                    decoration: BoxDecoration(
+                        gradient: new LinearGradient(colors: [
+                          Colors.purple.shade600,
+                          Colors.purple.shade200
+                        ]),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 4,
+                              color: Colors.blue.shade200,
+                              offset: Offset(2, 2))
+                        ]),
+                    child: Text(
+                      "Add".toUpperCase(),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.7),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  onTap: () async {
+                    bool isContainerPhone = isPhoneContain(phoneController.text);
+                    if (isContainerPhone != true) {
+                      Fluttertoast.showToast(msg: "Phone is not register");
+                      return;
+                    }
+                    List<String> idUserHasPhoneNumber = idandNameHasPhoneNumber(phoneController.text);
+                    String idUserReceiver='';
+                    idUserReceiver = idUserHasPhoneNumber[0];
 
-                noti.creatNotificationToFireStore(myNoti,currentId);
-               } else {
-                noti.addSender(idNoti ??'', currentId);
-               }
-               debugPrint('idNoti: ${idNoti}');
-                Fluttertoast.showToast(msg: "Send friend request succesfull");
-              },
+                    NotificationService noti = NotificationService();
+                    // List<MyNotification>? myNotifications = await noti.allNotisOnce;
+                    // debugPrint('myNotifications.length ${myNotifications?.length}');
+                    String? idNoti = await noti.getIdNotiByIdSender(idUserReceiver);
+                    FirebaseAuth _auth = FirebaseAuth.instance;
+                    String currentId = _auth.currentUser!.uid;
+                    if (idNoti == '') {
+                      MyNotification myNoti = MyNotification();
+
+                      myNoti.ReceiverId = idUserReceiver;
+                      myNoti.SenderId?.add(currentId);
+
+                      noti.creatNotificationToFireStore(myNoti,currentId);
+                    } else {
+                      noti.addSender(idNoti ??'', currentId);
+                    }
+                    debugPrint('idNoti: ${idNoti}');
+                    Fluttertoast.showToast(msg: "Send friend request succesfull");
+                  },
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: height * 0.03,
           ),
         ],
       ),
