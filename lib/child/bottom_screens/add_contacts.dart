@@ -60,49 +60,70 @@ class _AddContactsPageState extends State<AddContactsPage> {
     if (contactList == null) {
       contactList = [];
     }
-    return SafeArea(
-      child: Container(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Contacts'),
+      ),
+      body: Container(
           padding: EdgeInsets.all(12),
           child: Column(
             children: [
-              PrimaryButton(
-                  title: "Add Friends",
-                  onPressed: () async {
-                    UserService userService = UserService();
-                    var listUsers = (await userService.allUsersOnce);
-
-                    debugPrint('Length of List User: ${listUsers?.length}');
-                    listUsers?.forEach(
-                      (element) {
-                        debugPrint('User: ${element.phone}');
-                      },
-                    );
-
-                    bool result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              AddFriend(listUserFromFireStore: listUsers ?? []),
-                        ));
-                    if (result == true) {
-                      showList();
-                    }
-                  }),
               SizedBox(
-                height: 20,
+                height: 8,
               ),
-              PrimaryButton(
-                  title: "Add Trusted Contacts",
-                  onPressed: () async {
-                    bool result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ContactsPage(),
-                        ));
-                    if (result == true) {
-                      showList();
-                    }
-                  }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 150,
+                    child: PrimaryButton(
+                        title: "Add Friends",
+                        onPressed: () async {
+                          UserService userService = UserService();
+                          var listUsers = (await userService.allUsersOnce);
+
+                          debugPrint(
+                              'Length of List User: ${listUsers?.length}');
+                          listUsers?.forEach(
+                            (element) {
+                              debugPrint('User: ${element.phone}');
+                            },
+                          );
+
+                          bool result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddFriend(
+                                    listUserFromFireStore: listUsers ?? []),
+                              ));
+                          if (result == true) {
+                            showList();
+                          }
+                        }),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Container(
+                    width: 170,
+                    child: PrimaryButton(
+                        title: "Add Contacts",
+                        onPressed: () async {
+                          bool result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ContactsPage(),
+                              ));
+                          if (result == true) {
+                            showList();
+                          }
+                        }),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 8,
+              ),
               Expanded(
                 child: ListView.builder(
                   // shrinkWrap: true,

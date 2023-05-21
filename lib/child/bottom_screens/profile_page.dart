@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +27,8 @@ class _ProfilePageState extends State<ProfilePage> {
   String? id;
   String? profilePic;
   String? downloadUrl;
+  String? phone;
+  String? email;
   bool isSaving = false;
   getDate() async {
     await FirebaseFirestore.instance
@@ -37,6 +40,8 @@ class _ProfilePageState extends State<ProfilePage> {
         nameC.text = value.docs.first['name'];
         id = value.docs.first.id;
         profilePic = value.docs.first['profilePic'];
+        phone = value.docs.first['phone'];
+        email = value.docs.first['email'];
       });
     });
   }
@@ -68,16 +73,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             "UPDATE YOUR PROFILE",
                             style: TextStyle(fontSize: 25),
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.logout),
-                            title: Text('Log Out'),
-                            onTap: () async {
-                              SharedPreferences preferences =
-                                  await SharedPreferences.getInstance();
-                              await preferences.clear();
-                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
-                            },
                           ),
                           SizedBox(height: 15),
                           GestureDetector(
@@ -118,9 +113,36 @@ class _ProfilePageState extends State<ProfilePage> {
                                               FileImage(File(profilePic!))),
                             ),
                           ),
+                          Text(
+                            nameC.text,
+                            style: GoogleFonts.roboto(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
+                          ),
+                          Container(
+                              child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                  Text('Phone: ' + (phone ?? 'N/A')),
+                                  Text('Email: ' + (email ?? 'N/A')),
+                                ]),
+                              ),
+                              Spacer(),
+                              Image.asset(
+                                'assets/QR.png',
+                                height: 80,
+                                width: 80,
+                              ),
+                            ],
+                          )),
                           CustomTextField(
                             controller: nameC,
-                            hintText: nameC.text,
+                            hintText: 'Enter your new name',
                             validate: (v) {
                               if (v!.isEmpty) {
                                 return 'please enter your updated name';
@@ -128,19 +150,35 @@ class _ProfilePageState extends State<ProfilePage> {
                               return null;
                             },
                           ),
-                          SizedBox(height: 25),
-                          PrimaryButton(
-                              title: "UPDATE",
-                              onPressed: () async {
-                                if (key.currentState!.validate()) {
-                                  SystemChannels.textInput
-                                      .invokeMethod('TextInput.hide');
-                                  profilePic == null
-                                      ? Fluttertoast.showToast(
-                                          msg: 'please select profile picture')
-                                      : update();
-                                }
-                              })
+                          SizedBox(height: 8),
+                          Container(
+                            width: 150,
+                            child: PrimaryButton(
+                                title: "UPDATE",
+                                onPressed: () async {
+                                  if (key.currentState!.validate()) {
+                                    SystemChannels.textInput
+                                        .invokeMethod('TextInput.hide');
+                                    profilePic == null
+                                        ? Fluttertoast.showToast(
+                                            msg: 'please select profile picture')
+                                        : update();
+                                  }
+                                }),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.logout),
+                            title: Text('Log Out'),
+                            onTap: () async {
+                              SharedPreferences preferences =
+                                  await SharedPreferences.getInstance();
+                              await preferences.clear();
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()),
+                                  (route) => false);
+                            },
+                          ),
                         ],
                       )),
                 ),

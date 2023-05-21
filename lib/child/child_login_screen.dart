@@ -9,7 +9,6 @@ import 'package:women_safety_app/child/register_child.dart';
 import 'package:women_safety_app/db/share_pref.dart';
 import 'package:women_safety_app/utils/constants.dart';
 
-
 class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -80,15 +79,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "USER LOGIN",
+                                "LOGIN",
                                 style: TextStyle(
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold,
                                     color: primaryColor),
                               ),
                               Image.asset(
-                                'assets/location-marker.png',
-                                height: 100,
+                                'assets/logo_login.png',
+                                height: 130,
                                 width: 100,
                               ),
                             ],

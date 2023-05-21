@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:women_safety_app/utils/quotes.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -15,12 +16,11 @@ class CustomAppBar extends StatelessWidget {
         onTap!();
       },
       child: Container(
-        child: Text(
-          sweetSayings[quoteIndex!],
-          style: TextStyle(
-            fontSize: 22,
-          ),
-        ),
+        child: Text(sweetSayings[quoteIndex!],
+            style: GoogleFonts.roboto(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic)),
       ),
     );
   }
