@@ -204,7 +204,6 @@ class _ProfilePageState extends State<ProfilePage> {
       });
       return downloadUrl;
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
     }
     return null;
   }

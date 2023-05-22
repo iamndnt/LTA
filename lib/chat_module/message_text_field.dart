@@ -65,10 +65,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      Fluttertoast.showToast(msg: "Location permissions are  denind");
+      Fluttertoast.showToast(msg: "Location permissions are  denied");
       if (permission == LocationPermission.deniedForever) {
         Fluttertoast.showToast(
-            msg: "Location permissions are permanently denind");
+            msg: "Location permissions are permanently denied");
       }
     }
     Geolocator.getCurrentPosition(
@@ -81,7 +81,6 @@ class _MessageTextFieldState extends State<MessageTextField> {
         _getAddressFromLatLon();
       });
     }).catchError((e) {
-      Fluttertoast.showToast(msg: e.toString());
     });
   }
 
@@ -96,7 +95,6 @@ class _MessageTextFieldState extends State<MessageTextField> {
             "${place.locality},${place.postalCode},${place.street},";
       });
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
     }
   }
 

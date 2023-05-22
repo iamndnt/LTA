@@ -7,9 +7,11 @@ import '../../chat_module/chat_screen_group.dart';
 import '../../utils/constants.dart';
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
-
+  ChatPage({super.key});
   @override
+  String avt1="https://firebasestorage.googleapis.com/v0/b/ltsv2-2f7f9.appspot.com/o/profile%2Favatar-mac-dinh.png?alt=media&token=98de0f6e-237c-42ca-93ba-4565e1365eb8";
+  String avt2="https://firebasestorage.googleapis.com/v0/b/ltsv2-2f7f9.appspot.com/o/profile%2F148-1489698_the-main-group-group-chat-group-chat-icon.png?alt=media&token=6b74ad58-f925-42d0-9e34-20bfc2e60fe4";
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -51,7 +53,7 @@ class ChatPage extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 24,
-                            backgroundImage: NetworkImage(d['profilePic']),
+                            backgroundImage: NetworkImage(snapshot.data!.docs.contains('profilePic')?avt1:d['profilePic']),
                           ),
                           Positioned(
                             right: 0,
@@ -135,7 +137,7 @@ class ChatPage extends StatelessWidget {
                               children: [
                                 CircleAvatar(
                                   radius: 24,
-                                  backgroundImage: NetworkImage(g['groupPic']),
+                                  backgroundImage: NetworkImage(snapshot1.data!.docs.contains('profilePic')?g['groupPic']:avt2),
                                 ),
                                 Positioned(
                                   right: 0,
