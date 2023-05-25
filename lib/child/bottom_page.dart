@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:women_safety_app/chatbox/screens/chatbox.dart';
 import 'package:women_safety_app/child/AlerScreen.dart';
 import 'package:women_safety_app/child/bottom_screens/add_contacts.dart';
 import 'package:women_safety_app/child/bottom_screens/chat_page.dart';
 import 'package:women_safety_app/child/bottom_screens/child_home_page.dart';
 import 'package:women_safety_app/child/bottom_screens/profile_page.dart';
+
+import '../chatbox/final_chatbox.dart';
 
 class BottomPage extends StatefulWidget {
   BottomPage({Key? key}) : super(key: key);
@@ -19,6 +22,7 @@ class _BottomPageState extends State<BottomPage> {
     AddContactsPage(),
     ChatPage(),
     AlertScreen(),
+    MyChatBox(),
     ProfilePage(),
   ];
   onTapped(int index) {
@@ -55,6 +59,11 @@ class _BottomPageState extends State<BottomPage> {
               label: 'Alert',
               icon: Icon(
                 Icons.add_alert_rounded,
+              )),
+          BottomNavigationBarItem(
+              label: 'Chatbox',
+              icon: Icon(
+                Icons.question_mark,
               )),
           BottomNavigationBarItem(
               label: 'Profile',
