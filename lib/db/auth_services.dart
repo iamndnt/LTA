@@ -36,9 +36,6 @@ class AuthClass {
         await user.addUser();
       }
     } catch (e) {
-      print("here---->");
-      final snackBar = SnackBar(content: Text(e.toString()));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
@@ -47,8 +44,6 @@ class AuthClass {
       await _googleSignIn.signOut();
       await _auth.signOut();
     } catch (e) {
-      final snackBar = SnackBar(content: Text(e.toString()));
-      ScaffoldMessenger.of(context!).showSnackBar(snackBar);
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:background_sms/background_sms.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int qIndex = 0;
   Position? _curentPosition;
   String? _curentAddress;
+  int count=0;
   LocationPermission? permission;
   _getPermission() async => await [Permission.sms].request();
   _isPermissionGranted() async => await Permission.sms.status.isGranted;
@@ -108,14 +110,29 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  _callNumber(String number) async {
+    await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
   getAndSendSms() async {
     List<TContact> contactList = await DatabaseHelper().getContactList();
 
     String messageBody =
         "https://maps.google.com/?daddr=${_curentPosition!.latitude},${_curentPosition!.longitude}";
     if (await _isPermissionGranted()) {
+      int dem=0;
+      contactList.forEach((element) {
+        dem++;
+      });
+      if(dem==0)
+        Fluttertoast.showToast(msg: "Please add people to trusted contact!!");
+
       contactList.forEach((element) {
         _sendSms("${element.number}", "I am in trouble $messageBody");
+      });
+      contactList.forEach((element) {
+        _callNumber(element.number);
+
       });
     } else {
       Fluttertoast.showToast(msg: "something wrong");
@@ -131,12 +148,25 @@ class _HomeScreenState extends State<HomeScreen> {
     ////// shake feature ///
     ShakeDetector.autoStart(
       onPhoneShake: () {
-        getAndSendSms();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Shake!'),
-          ),
-        );
+        if(count ==3){
+          getAndSendSms();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Send emergency!!'),
+            ),
+          );
+          count=0;
+        }
+        else{
+          int time=3-count;
+          count++;
+          ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(
+              content: Text('Shake '+time.toString()+"time to send emergency notification!"),
+            ),
+          );
+        }
+
         // Do stuff on phone shake
       },
       minimumShakeCount: 1,

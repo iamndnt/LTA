@@ -72,6 +72,13 @@ class _SecondScreenSOSState extends State<SecondScreenSOS> {
     String messageBody =
         "https://maps.google.com/?daddr=${_curentPosition!.latitude},${_curentPosition!.longitude}";
     if (await _isPermissionGranted()) {
+      int dem=0;
+      contactList.forEach((element) {
+        dem++;
+      });
+      if(dem==0)
+        Fluttertoast.showToast(msg: "Please add people to trusted contact!!");
+
       contactList.forEach((element) {
         _sendSms("${element.number}", "I am in trouble $messageBody");
       });

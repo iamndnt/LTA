@@ -169,6 +169,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  diamond_bottom_bar:
+    dependency: "direct main"
+    description:
+      name: diamond_bottom_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   equatable:
     dependency: transitive
     description:

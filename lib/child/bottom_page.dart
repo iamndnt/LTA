@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:women_safety_app/chatbox/screens/chatbox.dart';
+
 import 'package:women_safety_app/child/AlerScreen.dart';
 import 'package:women_safety_app/child/bottom_screens/add_contacts.dart';
 import 'package:women_safety_app/child/bottom_screens/chat_page.dart';
@@ -25,12 +25,12 @@ class _BottomPageState extends State<BottomPage> {
     MyChatBox(),
     ProfilePage(),
   ];
+
   onTapped(int index) {
     setState(() {
       currentIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,17 +41,17 @@ class _BottomPageState extends State<BottomPage> {
         onTap: onTapped,
         items: [
           BottomNavigationBarItem(
-              label: 'home',
+              label: 'Home',
               icon: Icon(
                 Icons.home,
               )),
           BottomNavigationBarItem(
-              label: 'contacts',
+              label: 'Contacts',
               icon: Icon(
                 Icons.contacts,
               )),
           BottomNavigationBarItem(
-              label: 'chats',
+              label: 'Chats',
               icon: Icon(
                 Icons.chat,
               )),

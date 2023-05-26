@@ -181,12 +181,6 @@ class _ChatBotState extends State<ChatBot> {
       setState(() {});
     } catch (error) {
       log("error $error");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: TextWidget(
-          label: error.toString(),
-        ),
-        backgroundColor: Colors.red,
-      ));
     } finally {
       setState(() {
         scrollListToEND();

@@ -88,7 +88,6 @@ class _SafeHomeState extends State<SafeHome> {
             "${place.locality},${place.postalCode},${place.street},";
       });
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString() + '_getAddressFromLatLon()');
     }
   }
 
