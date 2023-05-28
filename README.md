@@ -1,6 +1,6 @@
 # LTS
 
-A new Flutter project.
+Location Tracker for Safety-C2SE06
 
 ## Getting Started
 
