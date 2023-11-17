@@ -88,7 +88,7 @@ class _AddFriendState extends State<AddFriend> {
                     isScanCompleted = true;
 
                     phoneController.text=code;
-                    Fluttertoast.showToast(msg: "Scan successfully!");
+                    Fluttertoast.showToast(msg: "Quét thành công!");
                   }
                 }),
             // QRScannerOverlay(overlayColour)

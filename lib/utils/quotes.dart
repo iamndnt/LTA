@@ -8,10 +8,10 @@ List sweetSayings = [
 ];
 
 List<String> articleTitle = [
-  "Basic Safety Rules Every Child Should Know",
-  "Safety Tips for the Workplace",
-  "How we're ending violence against children",
-  "You are strong"
+  "Những quy tắc an toàn cơ bản mà mọi trẻ em nên biết",
+  "Lời khuyên an toàn cho nơi làm việc",
+  "Làm thế nào chúng ta chấm dứt bạo lực đối với trẻ em",
+  "Bạn mạnh mẽ hơn bạn nghĩ"
 ];
 List<String> imageSliders = [
   "https://firebasestorage.googleapis.com/v0/b/ltsv2-2f7f9.appspot.com/o/profile%2Fa1.jpg?alt=media&token=dd3358f2-f114-4557-af71-808dd5b01ef2",

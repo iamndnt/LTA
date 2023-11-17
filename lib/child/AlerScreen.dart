@@ -18,7 +18,7 @@ class AlertScreen extends StatefulWidget {
 class _AlertScreenState extends State<AlertScreen> {
   late Position _currentPosition;
   late String _currentAddress="......";
-  late String _currentCity="Đà Nẵng";
+  late String _currentCity="Hà Nội";
   bool isSaving = false;
   bool check=false;
 
@@ -77,7 +77,7 @@ class _AlertScreenState extends State<AlertScreen> {
         titleC.text='';
         contentC.text='';
         isSaving = false;
-        Fluttertoast.showToast(msg: 'Alert uploaded successfully');
+        Fluttertoast.showToast(msg: 'Đăng cảnh báo thành công');
       });
     });
   }
@@ -87,7 +87,7 @@ class _AlertScreenState extends State<AlertScreen> {
         context: context,
         builder: (_) {
           return AlertDialog(
-            title: Text("Add your alert"),
+            title: Text("Thêm cảnh báo"),
             content: Form(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -95,7 +95,7 @@ class _AlertScreenState extends State<AlertScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTextField(
-                        hintText: 'Enter title:',
+                        hintText: 'Nhập tiêu đề:',
                         controller: titleC,
                       ),
                     ),
@@ -103,7 +103,7 @@ class _AlertScreenState extends State<AlertScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTextField(
                         controller: contentC,
-                        hintText: 'Enter content:',
+                        hintText: 'Nhập nội dung:',
                         maxLines: 3,
                       ),
                     ),
@@ -111,13 +111,13 @@ class _AlertScreenState extends State<AlertScreen> {
                 )),
             actions: [
               PrimaryButton(
-                  title: "Save",
+                  title: "Lưu",
                   onPressed: () {
                     saveAlert();
                     Navigator.pop(context);
                   }),
               TextButton(
-                  child: Text("Cancel"),
+                  child: Text("Hủy"),
                   onPressed: () {
                     Navigator.pop(context);
                   }),
@@ -180,14 +180,14 @@ class _AlertScreenState extends State<AlertScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "Have a nice day!",
+                                    "Chúc bạn một ngày tốt lành!",
                                     style: TextStyle(
                                         fontSize: 24,
                                         color: Colors.white,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Text(
-                                    "Your current place is: "+_currentAddress,
+                                    "Vị trí hiện tại của bạn: "+_currentAddress,
                                     style: TextStyle(
                                         fontSize: 10,
                                         color: Colors.white,
@@ -198,7 +198,7 @@ class _AlertScreenState extends State<AlertScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Text(
-                                        "Share your alert!",
+                                        "Chia sẻ cảnh báo!",
                                         style: TextStyle(
                                           color: Colors.white.withOpacity(0.6),
                                           fontSize: 14.0,
@@ -229,7 +229,7 @@ class _AlertScreenState extends State<AlertScreen> {
                                     padding: EdgeInsets.only(
                                         left: 20.0, top: 20.0, bottom: 10.0),
                                     child: Text(
-                                        "Alert in your area",
+                                        "Cảnh báo tại vị trí gần bạn",
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,

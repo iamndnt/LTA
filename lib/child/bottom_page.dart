@@ -41,22 +41,22 @@ class _BottomPageState extends State<BottomPage> {
         onTap: onTapped,
         items: [
           BottomNavigationBarItem(
-              label: 'Home',
+              label: 'Trang Chủ',
               icon: Icon(
                 Icons.home,
               )),
           BottomNavigationBarItem(
-              label: 'Contacts',
+              label: 'Liên Hệ',
               icon: Icon(
                 Icons.contacts,
               )),
           BottomNavigationBarItem(
-              label: 'Chats',
+              label: 'Nhắn Tin',
               icon: Icon(
                 Icons.chat,
               )),
           BottomNavigationBarItem(
-              label: 'Alert',
+              label: 'Cảnh báo',
               icon: Icon(
                 Icons.add_alert_rounded,
               )),
@@ -66,7 +66,7 @@ class _BottomPageState extends State<BottomPage> {
                 Icons.question_mark,
               )),
           BottomNavigationBarItem(
-              label: 'Profile',
+              label: 'Cá Nhân',
               icon: Icon(
                 Icons.person,
               )),

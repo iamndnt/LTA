@@ -41,7 +41,7 @@ class _AddContactsPageState extends State<AddContactsPage> {
   void deleteContact(TContact contact) async {
     int result = await databasehelper.deleteContact(contact.id);
     if (result != 0) {
-      Fluttertoast.showToast(msg: "contact removed succesfully");
+      Fluttertoast.showToast(msg: "Xóa liên hệ thành công");
       showList();
     }
   }
@@ -62,7 +62,7 @@ class _AddContactsPageState extends State<AddContactsPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contacts'),
+        title: Text('Liên hệ'),
       ),
       body: Container(
           padding: EdgeInsets.all(12),
@@ -77,7 +77,7 @@ class _AddContactsPageState extends State<AddContactsPage> {
                   Container(
                     width: 150,
                     child: PrimaryButton(
-                        title: "Add Friends",
+                        title: "Thêm bạn",
                         onPressed: () async {
                           UserService userService = UserService();
                           var listUsers = (await userService.allUsersOnce);
@@ -107,7 +107,7 @@ class _AddContactsPageState extends State<AddContactsPage> {
                   Container(
                     width: 170,
                     child: PrimaryButton(
-                        title: "Add Contacts",
+                        title: "Thêm liên hệ mới",
                         onPressed: () async {
                           bool result = await Navigator.push(
                               context,

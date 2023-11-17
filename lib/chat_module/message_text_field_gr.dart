@@ -65,10 +65,10 @@ class _MessageTextFieldGroupState extends State<MessageTextFieldGroup> {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      Fluttertoast.showToast(msg: "Location permissions are  denied");
+      Fluttertoast.showToast(msg: "Truy cập định vị bị chặn");
       if (permission == LocationPermission.deniedForever) {
         Fluttertoast.showToast(
-            msg: "Location permissions are permanently denied");
+            msg: "Truy cập định vị bị chặn");
       }
     }
     Geolocator.getCurrentPosition(
@@ -130,7 +130,7 @@ class _MessageTextFieldGroupState extends State<MessageTextFieldGroup> {
                 cursorColor: Colors.black,
                 controller: _controller,
                 decoration: InputDecoration(
-                  hintText: 'Type your message',
+                  hintText: 'Gõ vào đây để nhắn tin',
                   fillColor: Colors.grey[100],
                   filled: true,),
               ),
@@ -166,7 +166,7 @@ class _MessageTextFieldGroupState extends State<MessageTextFieldGroup> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            chatsIcon(Icons.location_pin, "location", () async {
+            chatsIcon(Icons.location_pin, "Vị trí", () async {
               await _getCurrentLocation();
               Future.delayed(Duration(seconds: 2), () {
                 message =
@@ -174,10 +174,10 @@ class _MessageTextFieldGroupState extends State<MessageTextFieldGroup> {
                 sendMessage(message!, "link");
               });
             }),
-            chatsIcon(Icons.camera_alt, "Camera", () async {
+            chatsIcon(Icons.camera_alt, "Máy ảnh", () async {
               await getImageFromCamera();
             }),
-            chatsIcon(Icons.insert_photo, "Photo", () async {
+            chatsIcon(Icons.insert_photo, "Ảnh", () async {
               await getImage();
             }),
           ],

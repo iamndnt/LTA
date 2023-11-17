@@ -46,16 +46,16 @@ class StartScreenSOS extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                            "One Click",
+                            "Click",
                             style: TextStyle(fontSize: 24,fontWeight:FontWeight.bold)
                         ),
                         Text(
-                            "to notify to every one",
+                            "để thông báo cho mọi người!",
                             style: TextStyle(fontSize: 24,fontWeight:FontWeight.bold,color: Colors.blue)
                         ),
                         SizedBox(height: 20,),
                         Text(
-                            "You can add people in contact to trusted list\nand notify them when in the emergency case\nor shake your phone 3 times to do that.",
+                            "Bạn có thể thêm người vào danh sách tin cậy\nvà thông báo tới họ trọng trường hợp khẩn cấp\nhoặc chỉ đơn giản là lắc điện thoại 3 lần để làm điều đó.",
                             style: TextStyle(fontSize: 10,fontWeight: FontWeight.w300)
                         )
                       ],
@@ -65,7 +65,7 @@ class StartScreenSOS extends StatelessWidget {
                     padding: EdgeInsets.only(left: 20,right: 10,),
                     child: Row(
                       children: [
-                        TextButton(onPressed: (){Navigator.pop(context);}, child: Text('Skip Now')),
+                        TextButton(onPressed: (){Navigator.pop(context);}, child: Text('Bỏ qua')),
                         Spacer(),
                         ElevatedButton(
                           onPressed: () {

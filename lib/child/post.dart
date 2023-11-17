@@ -111,7 +111,7 @@ class _PostState extends State<Post> {
                                               final d = snapshot.data!.docs[i];
                                               if(eachPost.author_id?.compareTo(d['id'])==0)
                                                 return Text(
-                                                  d['name']??'Loading...',
+                                                  d['name']??'Đang tải...',
                                                   style: TextStyle(
                                                       color: Colors.grey
                                                           .withOpacity(0.6)),

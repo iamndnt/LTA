@@ -25,7 +25,7 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
   _onSubmit() async {
     _formKey.currentState!.save();
     if (_formData['password'] != _formData['rpassword']) {
-      dialogueBox(context, 'password and retype password should be equal');
+      dialogueBox(context, 'Mật khẩu không khớp');
     } else {
       progressIndicator(context);
       try {
@@ -62,10 +62,10 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');
-          dialogueBox(context, 'The password provided is too weak.');
+          dialogueBox(context, 'Mật khẩu quá yếu');
         } else if (e.code == 'email-already-in-use') {
           print('The account already exists for that email.');
-          dialogueBox(context, 'The account already exists for that email.');
+          dialogueBox(context, 'Email đã tồn tại');
         }
         setState(() {
           isLoading = false;
@@ -101,7 +101,7 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  "REGISTER USER",
+                                  "Đăng ký",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 40,
@@ -125,7 +125,7 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   CustomTextField(
-                                    hintText: 'Enter Name',
+                                    hintText: 'Nhập tên',
                                     textInputAction: TextInputAction.next,
                                     keyboardtype: TextInputType.name,
                                     prefix: Icon(Icons.person),
@@ -134,13 +134,13 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                                     },
                                     validate: (email) {
                                       if (email!.isEmpty || email.length < 3) {
-                                        return 'enter correct name';
+                                        return 'Xin hãy nhập đúng email';
                                       }
                                       return null;
                                     },
                                   ),
                                   CustomTextField(
-                                    hintText: 'Enter Phone Number',
+                                    hintText: 'Nhập số điện thoại',
                                     textInputAction: TextInputAction.next,
                                     keyboardtype: TextInputType.phone,
                                     prefix: Icon(Icons.phone),
@@ -149,13 +149,13 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                                     },
                                     validate: (email) {
                                       if (email!.isEmpty || email.length < 10) {
-                                        return 'enter correct phone';
+                                        return 'Xin hãy nhập đúng sđt';
                                       }
                                       return null;
                                     },
                                   ),
                                   CustomTextField(
-                                    hintText: 'Enter Email',
+                                    hintText: 'Nhập email',
                                     textInputAction: TextInputAction.next,
                                     keyboardtype: TextInputType.emailAddress,
                                     prefix: Icon(Icons.person),
@@ -166,18 +166,18 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                                       if (email!.isEmpty ||
                                           email.length < 3 ||
                                           !email.contains("@")) {
-                                        return 'enter correct email';
+                                        return 'Xin hãy nhập đúng email';
                                       }
                                     },
                                   ),
                                   CustomTextField(
-                                    hintText: 'Enter Password',
+                                    hintText: 'Nhập mật khẩu',
                                     isPassword: isPasswordShown,
                                     prefix: Icon(Icons.vpn_key_rounded),
                                     validate: (password) {
                                       if (password!.isEmpty ||
                                           password.length < 7) {
-                                        return 'enter correct password';
+                                        return 'Xin hãy nhập đúng mật khẩu';
                                       }
                                       return null;
                                     },
@@ -195,13 +195,13 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                                             : Icon(Icons.visibility)),
                                   ),
                                   CustomTextField(
-                                    hintText: 'Retype Password',
+                                    hintText: 'Nhập lại mật khẩu',
                                     isPassword: isRetypePasswordShown,
                                     prefix: Icon(Icons.vpn_key_rounded),
                                     validate: (password) {
                                       if (password!.isEmpty ||
                                           password.length < 7) {
-                                        return 'Enter Correct Password';
+                                        return 'Xin hãy nhập đúng mật khẩu';
                                       }
                                       return null;
                                     },
@@ -220,7 +220,7 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                                             : Icon(Icons.visibility)),
                                   ),
                                   PrimaryButton(
-                                      title: 'REGISTER',
+                                      title: 'Đăng ký',
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
                                           _onSubmit();
@@ -231,7 +231,7 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                             ),
                           ),
                           SecondaryButton(
-                              title: 'Login with your account',
+                              title: 'Đăng nhập với tài khoản',
                               onPressed: () {
                                 goTo(context, LoginScreen());
                               }),

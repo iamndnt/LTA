@@ -65,10 +65,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      Fluttertoast.showToast(msg: "Location permissions are  denied");
+      Fluttertoast.showToast(msg: "Truy cập vị trí bị chặn");
       if (permission == LocationPermission.deniedForever) {
         Fluttertoast.showToast(
-            msg: "Location permissions are permanently denied");
+            msg: "Truy cập vị trí bị chặn");
       }
     }
     Geolocator.getCurrentPosition(
@@ -144,7 +144,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                 cursorColor: Colors.black,
                 controller: _controller,
                 decoration: InputDecoration(
-                    hintText: 'Type your message',
+                    hintText: 'Gõ vào đây để nhắn tin',
                     fillColor: Colors.grey[100],
                     filled: true,),
               ),
@@ -180,7 +180,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            chatsIcon(Icons.location_pin, "location", () async {
+            chatsIcon(Icons.location_pin, "Vị trí", () async {
               await _getCurrentLocation();
               Future.delayed(Duration(seconds: 2), () {
                 message =
@@ -188,10 +188,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
                 sendMessage(message!, "link");
               });
             }),
-            chatsIcon(Icons.camera_alt, "Camera", () async {
+            chatsIcon(Icons.camera_alt, "Máy ảnh", () async {
               await getImageFromCamera();
             }),
-            chatsIcon(Icons.insert_photo, "Photo", () async {
+            chatsIcon(Icons.insert_photo, "Ảnh", () async {
               await getImage();
             }),
           ],

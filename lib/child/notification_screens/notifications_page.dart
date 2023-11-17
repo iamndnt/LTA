@@ -90,7 +90,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         appBar: AppBar(),
         body: (isFriendRqFireStoreHaveIdReceiver() == false)
             ? Center(
-                child: Text('You don\'t have friend request 1'),
+                child: Text('Không có lời mời kết bạn nào'),
               )
             : StreamBuilder(
                 stream: DatabaseService()
@@ -98,7 +98,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 builder: (BuildContext context,
                     AsyncSnapshot<List<String>?> snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Something went wrong: ${snapshot.error}');
+                    return Text('Có lỗi đã xảy ra: ${snapshot.error}');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting ||
                       snapshot.data == null) {
@@ -111,7 +111,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   List<String>? listIdSender = snapshot.data;
                   if (listIdSender?.length == 0) {
                     return Center(
-                      child: Text('You don\'t have friend request 2'),
+                      child: Text('Bạn không có lời mời kết bạn'),
                     );
                   }
                   listUserHaveIdSender.clear();
@@ -142,19 +142,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           title: Text((listUserHaveIdSender[index].name!.length > 10)
                               ? ('${listUserHaveIdSender[index].name!.substring(1, 10)}... ')
                               : ('${listUserHaveIdSender[index].name!}') +
-                                  " sent a friend request "),
+                                  " đã gửi lời mời kết bạn "),
                           //trailing: Icon(Icons.person_add_alt_1_sharp),
                           trailing: Column(
                             children: [
                               Spacer(),
                               myAcceptFriendRequestButton(
-                                  'ACCEPT',
+                                  'Chấp nhậnw',
                                   currentId,
                                   listUserHaveIdSender[index].id ?? '',
                                   idNotiCurrent ?? ''),
                               Spacer(),
                               myAcceptFriendRequestButton(
-                                  'REMOVE',
+                                  'Xóa',
                                   currentId,
                                   listUserHaveIdSender[index].id ?? '',
                                   idNotiCurrent ?? ''),
@@ -170,7 +170,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Widget myAcceptFriendRequestButton(
       String ACCEPT, String currentUser, String idSender, String idNoti) {
-    bool isAccept = ACCEPT == 'ACCEPT';
+    bool isAccept = ACCEPT == 'Chấp nhận';
 
     return InkWell(
       child: Container(

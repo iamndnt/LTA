@@ -38,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
         phoneNumber: phoneNumber, message: message, simSlot: 1);
     if (result == SmsStatus.sent) {
       print("Sent");
-      Fluttertoast.showToast(msg: "send");
+      Fluttertoast.showToast(msg: "Gửi");
     } else {
-      Fluttertoast.showToast(msg: "failed");
+      Fluttertoast.showToast(msg: "Thất bại");
     }
   }
 
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-              'Location services are disabled. Please enable the services')));
+              'Dịch vụ định vị đã bị tắt, vui lòng bật định vị')));
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -60,14 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+            const SnackBar(content: Text('Truy cập định vị bị chặn')));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
+              'Quyền truy cập định vị bị chặn')));
       return false;
     }
     return true;
@@ -125,17 +125,17 @@ class _HomeScreenState extends State<HomeScreen> {
         dem++;
       });
       if(dem==0)
-        Fluttertoast.showToast(msg: "Please add people to trusted contact!!");
+        Fluttertoast.showToast(msg: "Xin vui lòng thêm người vào liên hệ tin cậy");
 
       contactList.forEach((element) {
-        _sendSms("${element.number}", "I am in trouble $messageBody");
+        _sendSms("${element.number}", "Tôi đang gặp sự cố $messageBody");
       });
       contactList.forEach((element) {
         _callNumber(element.number);
 
       });
     } else {
-      Fluttertoast.showToast(msg: "something wrong");
+      Fluttertoast.showToast(msg: "Có lỗi đã xảy ra");
     }
   }
 
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
           getAndSendSms();
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Send emergency!!'),
+              content: Text('Gửi thông báo khẩn cấp'),
             ),
           );
           count=0;
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
           count++;
           ScaffoldMessenger.of(context).showSnackBar(
              SnackBar(
-              content: Text('Shake '+time.toString()+"time to send emergency notification!"),
+              content: Text('Lắc '+time.toString()+" lần để gửi thông báo khẩn cấp"),
             ),
           );
         }
@@ -200,8 +200,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       ListTile(
-                        title: Text("Alert to trusted people"),
-                        subtitle: Text("In case of danger"),
+                        title: Text("Cảnh báo tới người tin cậy"),
+                        subtitle: Text("trong trường hợp khẩn cấp"),
                       ),
                     ],
                   )),
@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Emergency",
+                        "Khẩn cấp",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -244,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Explore LiveSafe",
+                        "Khám phá",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),

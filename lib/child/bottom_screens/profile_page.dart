@@ -72,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "UPDATE YOUR PROFILE",
+                            "CẬP NHẬT THÔNG TIN CÁ NHÂN",
                             style: TextStyle(fontSize: 25),
                           ),
                           SizedBox(height: 15),
@@ -129,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                  Text('Phone: ' + (phone ?? 'N/A')),
+                                  Text('Số điện thoại: ' + (phone ?? 'N/A')),
                                   Text('Email: ' + (email ?? 'N/A')),
                                 ]),
                               ),
@@ -148,10 +148,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           )),
                           CustomTextField(
                             controller: nameC,
-                            hintText: 'Enter your new name',
+                            hintText: 'Nhập tên',
                             validate: (v) {
                               if (v!.isEmpty) {
-                                return 'please enter your updated name';
+                                return 'Vui lòng nhập tên mới';
                               }
                               return null;
                             },
@@ -160,21 +160,21 @@ class _ProfilePageState extends State<ProfilePage> {
                           Container(
                             width: 150,
                             child: PrimaryButton(
-                                title: "UPDATE",
+                                title: "CẬP NHẬT",
                                 onPressed: () async {
                                   if (key.currentState!.validate()) {
                                     SystemChannels.textInput
                                         .invokeMethod('TextInput.hide');
                                     profilePic == null
                                         ? Fluttertoast.showToast(
-                                            msg: 'please select profile picture')
+                                            msg: 'Vui lòng chọn ảnh đại diện')
                                         : update();
                                   }
                                 }),
                           ),
                           ListTile(
                             leading: Icon(Icons.logout),
-                            title: Text('Log Out'),
+                            title: Text('Đăng xuất'),
                             onTap: () async {
                               SharedPreferences preferences =
                                   await SharedPreferences.getInstance();

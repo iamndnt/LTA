@@ -47,7 +47,7 @@ class FirebrigadeEmergency extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Fire brigade',
+                          'Cứu Hỏa',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -55,7 +55,7 @@ class FirebrigadeEmergency extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Case fire emergency call',
+                          'Cuộc Gọi Khẩn Cấp Trường Hợp Hỏa Hoạn',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: MediaQuery.of(context).size.width * 0.045,

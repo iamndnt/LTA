@@ -107,7 +107,7 @@ class _ChatBotState extends State<ChatBot> {
                               chatProvider: chatProvider);
                         },
                         decoration: const InputDecoration.collapsed(
-                            hintText: "How can I help you",
+                            hintText: "Tôi có thể giúp gì cho bạn",
                             hintStyle: TextStyle(color: Colors.grey)),
                       ),
                     ),
@@ -145,7 +145,7 @@ class _ChatBotState extends State<ChatBot> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: TextWidget(
-            label: "You cant send multiple messages at a time",
+            label: "Bạn có thể nhắn nhiều tin cùng một lúc",
           ),
           backgroundColor: Colors.red,
         ),
@@ -156,7 +156,7 @@ class _ChatBotState extends State<ChatBot> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: TextWidget(
-            label: "Please type a message",
+            label: "Làm ơn nhập một tin nhắn",
           ),
           backgroundColor: Colors.red,
         ),

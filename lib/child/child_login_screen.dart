@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "LOGIN",
+                                "ĐĂNG NHẬP",
                                 style: TextStyle(
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold,
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomTextField(
-                                  hintText: 'enter email',
+                                  hintText: 'Nhập email',
                                   textInputAction: TextInputAction.next,
                                   keyboardtype: TextInputType.emailAddress,
                                   prefix: Icon(Icons.person),
@@ -112,18 +112,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (email!.isEmpty ||
                                         email.length < 3 ||
                                         !email.contains("@")) {
-                                      return 'enter correct email';
+                                      return 'Nhập email không chính xác';
                                     }
                                   },
                                 ),
                                 CustomTextField(
-                                  hintText: 'enter password',
+                                  hintText: 'Nhập mật khẩu',
                                   isPassword: isPasswordShown,
                                   prefix: Icon(Icons.vpn_key_rounded),
                                   validate: (password) {
                                     if (password!.isEmpty ||
                                         password.length < 7) {
-                                      return 'enter correct password';
+                                      return 'Nhập mật khẩu sai';
                                     }
                                     return null;
                                   },
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           : Icon(Icons.visibility)),
                                 ),
                                 PrimaryButton(
-                                    title: 'LOGIN',
+                                    title: 'Đăng Nhập',
                                     onPressed: () {
                                       // progressIndicator(context);
                                       if (_formKey.currentState!.validate()) {
@@ -157,16 +157,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Forgot Password?",
+                                "Quên mật khẩu?",
                                 style: TextStyle(fontSize: 18),
                               ),
                               SecondaryButton(
-                                  title: 'click here', onPressed: () {}),
+                                  title: 'Nhấn vào đây', onPressed: () {}),
                             ],
                           ),
                         ),
                         SecondaryButton(
-                            title: 'Register',
+                            title: 'Đăng kí',
                             onPressed: () {
                               goTo(context, RegisterChildScreen());
                             }),

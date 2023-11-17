@@ -39,7 +39,7 @@ class _SafeHomeState extends State<SafeHome> {
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-              'Location services are disabled. Please enable the services')));
+              'Định vị bị chặn')));
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -47,14 +47,14 @@ class _SafeHomeState extends State<SafeHome> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+            const SnackBar(content: Text('Định vị bị chặn')));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
+              'Định vị bị chặn')));
       return false;
     }
     return true;
@@ -110,20 +110,20 @@ class _SafeHomeState extends State<SafeHome> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "SEND YOUR CUURENT LOCATION IMMEDIATELY TO YOU EMERGENCY CONTACTS",
+                  "GỬI NGAY VỊ TRÍ HIỆN TẠI CỦA BẠN ĐẾN LIÊN HỆ KHẨN CẤP CỦA BẠN",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 10),
                 if (_curentPosition != null) Text(_curentAddress!),
                 PrimaryButton(
-                    title: "GET LOCATION",
+                    title: "LẤY VỊ TRÍ",
                     onPressed: () {
                       _getCurrentLocation();
                     }),
                 SizedBox(height: 10),
                 PrimaryButton(
-                    title: "SEND ALERT",
+                    title: "GỬI THÔNG BÁO",
                     onPressed: () async {
                       String recipients = "";
                       List<TContact> contactList =
@@ -131,7 +131,7 @@ class _SafeHomeState extends State<SafeHome> {
                       print(contactList.length);
                       if (contactList.isEmpty) {
                         Fluttertoast.showToast(
-                            msg: "emergency contact is empty");
+                            msg: "liên hệ khẩn cấp trống");
                       } else {
                         String messageBody =
                             "https://www.google.com/maps/search/?api=1&query=${_curentPosition!.latitude}%2C${_curentPosition!.longitude}. $_curentAddress";
@@ -139,7 +139,7 @@ class _SafeHomeState extends State<SafeHome> {
                         if (await _isPermissionGranted()) {
                           contactList.forEach((element) {
                             _sendSms("${element.number}",
-                                "i am in trouble $messageBody");
+                                "Tôi đang gặp rắc rối, hãy giúp tôi qua địa chỉ:  $messageBody");
                           });
                         } else {
                           Fluttertoast.showToast(msg: "something wrong");
@@ -184,8 +184,8 @@ class _SafeHomeState extends State<SafeHome> {
                   child: Column(
                 children: [
                   ListTile(
-                    title: Text("Send Location"),
-                    subtitle: Text("Share Location"),
+                    title: Text("Gửi vị trí"),
+                    subtitle: Text("Chia sẻ vị trí"),
                   ),
                 ],
               )),

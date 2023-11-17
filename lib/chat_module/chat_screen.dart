@@ -70,7 +70,7 @@ class _ChatScreen1v1State extends State<ChatScreen1v1> {
                     if (snapshot.data!.docs.length < 1) {
                       return Center(
                         child: Text(
-                          'Let start conversation with '+widget.friendName,
+                          'Bắt đầu cuộc trò chuyện với '+widget.friendName,
                           style: TextStyle(fontSize: 30),
                         ),
                       );
@@ -102,7 +102,7 @@ class _ChatScreen1v1State extends State<ChatScreen1v1> {
                                   .doc(data.id)
                                   .delete()
                                   .then((value) => Fluttertoast.showToast(
-                                      msg: 'message deleted successfully'));
+                                      msg: 'Xóa tin nhắn thành công'));
                             },
                             child: SingleMessage(
                               message: data['message'],

@@ -35,7 +35,7 @@ class LocationMonitorCard extends StatelessWidget {
               ),
             ),
           ),
-          Text('Location Monitor')
+          Text('Theo dõi vị trí')
         ],
       ),
     );

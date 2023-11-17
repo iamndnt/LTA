@@ -54,7 +54,7 @@ class _SearchState extends State<Search> {
                             color: Colors.white,
                           ),
                           decoration: InputDecoration(
-                            labelText: 'Group Name',
+                            labelText: 'Tên nhóm',
                             labelStyle: TextStyle(
                               fontSize: 17,
                               color: Colors.white,
@@ -94,7 +94,7 @@ class _SearchState extends State<Search> {
 
           }),
       appBar: AppBar(
-        title: Text('Create Group'),
+        title: Text('Tạo nhóm'),
       ),
       body: Container(
         child: Column(
@@ -104,7 +104,7 @@ class _SearchState extends State<Search> {
               autofocus: true,
               decoration: InputDecoration(
                 // add more decoration
-                hintText: 'Search by phone',
+                hintText: 'Tìm qua sđt',
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(color: Colors.black, fontSize: 16.0),

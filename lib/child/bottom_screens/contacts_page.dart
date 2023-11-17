@@ -72,9 +72,9 @@ class _ContactsPageState extends State<ContactsPage> {
 
   handInvaliedPermissions(PermissionStatus permissionStatus) {
     if (permissionStatus == PermissionStatus.denied) {
-      dialogueBox(context, "Access to the contacts denied by the user");
+      dialogueBox(context, "Truy cập đến danh bạ bị chặn bởi người dùng");
     } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
-      dialogueBox(context, "May contact does exist in this device");
+      dialogueBox(context, "Liên hệ có thể không tồn tại");
     }
   }
 
@@ -113,7 +113,7 @@ class _ContactsPageState extends State<ContactsPage> {
                       autofocus: true,
                       controller: searchController,
                       decoration: InputDecoration(
-                          labelText: "search sontact",
+                          labelText: "Tìm kiếm liên hệ",
                           prefixIcon: Icon(Icons.search)),
                     ),
                   ),
@@ -151,7 +151,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                   } else {
                                     Fluttertoast.showToast(
                                         msg:
-                                            "Oops! phone number of this contact does exist");
+                                            "Số điện thoại bị trùng");
                                   }
                                 },
                               );
@@ -159,7 +159,7 @@ class _ContactsPageState extends State<ContactsPage> {
                           ),
                         )
                       : Container(
-                          child: Text("searching"),
+                          child: Text("Tìm kiếm"),
                         ),
                 ],
               ),
@@ -170,9 +170,9 @@ class _ContactsPageState extends State<ContactsPage> {
   void _addContact(TContact newContact) async {
     int result = await _databaseHelper.insertContact(newContact);
     if (result != 0) {
-      Fluttertoast.showToast(msg: "contact added successfully");
+      Fluttertoast.showToast(msg: "Thêm liên hệ thành công");
     } else {
-      Fluttertoast.showToast(msg: "Failed to add contacts");
+      Fluttertoast.showToast(msg: "Lỗi khi thêm liên hệ");
     }
     Navigator.of(context).pop(true);
   }

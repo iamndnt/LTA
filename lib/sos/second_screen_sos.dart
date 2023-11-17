@@ -57,9 +57,9 @@ class _SecondScreenSOSState extends State<SecondScreenSOS> {
         phoneNumber: phoneNumber, message: message, simSlot: 1);
     if (result == SmsStatus.sent) {
       print("Sent");
-      Fluttertoast.showToast(msg: "send");
+      Fluttertoast.showToast(msg: "Đã gửi");
     } else {
-      Fluttertoast.showToast(msg: "failed");
+      Fluttertoast.showToast(msg: "Gửi thất bại");
     }
   }
   _callNumber(String number) async {
@@ -77,17 +77,17 @@ class _SecondScreenSOSState extends State<SecondScreenSOS> {
         dem++;
       });
       if(dem==0)
-        Fluttertoast.showToast(msg: "Please add people to trusted contact!!");
+        Fluttertoast.showToast(msg: "Thêm người vào danh sách tin cậy");
 
       contactList.forEach((element) {
-        _sendSms("${element.number}", "I am in trouble $messageBody");
+        _sendSms("${element.number}", "Tôi đang gặp sự cố. Hãy tới giúp tôi qua địa chỉ : $messageBody");
       });
       contactList.forEach((element) {
         _callNumber(element.number);
 
       });
     } else {
-      Fluttertoast.showToast(msg: "something wrong");
+      Fluttertoast.showToast(msg: "Lỗi!");
     }
   }
   Future<bool> _handleLocationPermission() async {
@@ -98,7 +98,7 @@ class _SecondScreenSOSState extends State<SecondScreenSOS> {
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-              'Location services are disabled. Please enable the services')));
+              'Quyền truy cập vị trị không khả dụng. Vui lòng bật định vị')));
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -106,14 +106,14 @@ class _SecondScreenSOSState extends State<SecondScreenSOS> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+            const SnackBar(content: Text('Quyền truy cập vị trị không khả dụng')));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
+              'Quyền truy cập vị trị không khả dụng')));
       return false;
     }
     return true;
@@ -156,7 +156,7 @@ class _SecondScreenSOSState extends State<SecondScreenSOS> {
           Spacer(),
           Center(child: buildTimer()),
           Spacer(),
-          Text('Sending emergency alerts to all friends who can see your location',style: TextStyle(
+          Text('Gửi thông báo khẩn cấp tới tất cả bạn bè',style: TextStyle(
             color: Colors.white,
             fontSize: 10
           ),),
@@ -169,7 +169,7 @@ class _SecondScreenSOSState extends State<SecondScreenSOS> {
                   {
                       Navigator.pop(context);
                   },
-                  child: Text("Cancel",style: TextStyle(
+                  child: Text("Hủy",style: TextStyle(
                     color: Colors.red
                   ),),
                   color: CupertinoColors.white
@@ -195,7 +195,7 @@ class _SecondScreenSOSState extends State<SecondScreenSOS> {
             width: 150,
             child: Divider(color: Colors.white,),
           ),
-          Text('Sending Panic Alert',style:  TextStyle(
+          Text('Gửi cảnh báo',style:  TextStyle(
     color: Colors.white,
     fontSize: 12
     ),),

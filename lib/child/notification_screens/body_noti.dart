@@ -24,7 +24,7 @@ class _BodyNotiState extends State<BodyNoti> {
         stream: DatabaseService().getListIdSender(currentId),
         builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
           List<String>? listIdSender = snapshot.data;
-          return Text("List Id Sender ${listIdSender?.length}");
+          return Text("Danh sách id người gửi ${listIdSender?.length}");
 
           //   ListView.builder(
           //   itemCount: listSOS.length,

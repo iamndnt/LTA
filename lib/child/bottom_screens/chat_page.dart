@@ -17,7 +17,7 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         // backgroundColor: Color.fromARGB(255, 250, 163, 192),
-        title: Text("Chat"),
+        title: Text("Nhắn tin"),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -88,7 +88,7 @@ class ChatPage extends StatelessWidget {
                               Opacity(
                                 opacity: 0.64,
                                 child: Text(
-                                  'Chat with '+d['name']+' now!',
+                                  'Nhắn tin cùng với '+d['name']+' ngay bây giờ!',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -172,7 +172,7 @@ class ChatPage extends StatelessWidget {
                                     Opacity(
                                       opacity: 0.64,
                                       child: Text(
-                                        'Chat with group: '+g['grpName']+' now!',
+                                        'Nhắn cùng nhóm: '+g['grpName']+' ngay bây giờ!',
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),

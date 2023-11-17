@@ -56,7 +56,7 @@ class _GroupLocationWidgetState extends State<GroupLocationWidget> {
           child: Icon(Icons.add),
         ),
         appBar: AppBar(
-          title: Text('My Group'),
+          title: Text('Nhóm của tôi'),
         ),
         body: Builder(
           builder: (context) {
